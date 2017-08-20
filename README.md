@@ -1,4 +1,10 @@
-# bcdice-js [![npm version](https://badge.fury.io/js/bcdice-js.svg)](https://badge.fury.io/js/bcdice-js)
+# bcdice-js
+[![npm package](https://img.shields.io/npm/v/bcdice-js.svg?style=flat-square)](https://www.npmjs.org/package/bcdice-js)
+[![Build Status](https://img.shields.io/travis/ukatama/bcdice-js/master.svg?style=flat-square)](https://travis-ci.org/ukatama/bcdice-js)
+[![PeerDependencies](https://img.shields.io/david/peer/ukatama/bcdice-js.svg?style=flat-square)](https://david-dm.org/ukatama/bcdice-js#info=peerDependencies&view=list)
+[![Dependencies](https://img.shields.io/david/ukatama/bcdice-js.svg?style=flat-square)](https://david-dm.org/ukatama/bcdice-js)
+[![DevDependencies](https://img.shields.io/david/dev/ukatama/bcdice-js.svg?style=flat-square)](https://david-dm.org/ukatama/bcdice-js#info=devDependencies&view=list)
+
 [BCDice](https://github.com/torgtaitai/BCDice) for JavaScript (Browser/Node.js).
 Transpiled by [Opal](http://opalrb.org/).
 

@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 $:.unshift File.dirname(__FILE__) + '/BCDice/src'
 
+require 'base64'
+require 'opal'
+require 'pathname'
 require 'rake/testtask'
 require 'rake/clean'
+require 'diceBot/DiceBotLoader'
+require 'diceBot/DiceBotLoaderList'
+require 'TableFileData'
 
 task :default => :build
 
@@ -17,7 +23,6 @@ CLEAN.include(DIST_DIR)
 
 desc 'Convert converted Ruby codes'
 task :genRubyCodes => GEN_DIR do
-  require 'pathname'
   Encoding.default_external = 'UTF-8'
 
   Dir.glob('BCDice/src/**/*.rb').each do |src|
@@ -34,8 +39,6 @@ end
 
 desc 'Generate DiceBot loader'
 task :genDiceBotLoader => GEN_DIR do
-  require 'diceBot/DiceBotLoader'
-  require 'diceBot/DiceBotLoaderList'
 
   class DiceBotLoader
     def self.getFilenames()
@@ -67,8 +70,6 @@ end
 
 desc 'Generate extratables'
 task :genExtratables => GEN_DIR do
-  require 'Base64'
-  require 'TableFileData'
   tableFileData = TableFileData.new
 
   tableData = []
@@ -119,8 +120,6 @@ end
 
 desc 'Build JavaScript code'
 task :build => [:generate, DIST_DIR] do
-  require 'opal'
-
   builder = Opal::Builder.new
   builder.append_paths('.', './generated', './stub')
   File.open('./dist/bcdice.js', 'w') do |file|

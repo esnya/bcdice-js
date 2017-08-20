@@ -1,4 +1,4 @@
-# bcdice-js
+# bcdice-js [![npm version](https://badge.fury.io/js/bcdice-js.svg)](https://badge.fury.io/js/bcdice-js)
 [BCDice](https://github.com/torgtaitai/BCDice) for JavaScript (Browser/Node.js).
 Transpiled by [Opal](http://opalrb.org/).
 

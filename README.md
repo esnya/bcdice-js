@@ -1,5 +1,6 @@
 # bcdice-js
-BCDice for JavaScript (Browser/Node.js)
+[BCDice](https://github.com/torgtaitai/BCDice) for JavaScript (Browser/Node.js).
+Transpiled by [Opal](http://opalrb.org/).
 
 ## Examples
 - Node.js (CommonJS):

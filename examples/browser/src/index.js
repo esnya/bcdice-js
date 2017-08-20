@@ -1,4 +1,4 @@
-import BCDice from '../../../dist/bcdice';
+import BCDice from '../../../';
 
 const diceBotElement = document.getElementById('diceBot');
 const inputElement = document.getElementById('input');

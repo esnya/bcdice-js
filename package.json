@@ -1,0 +1,30 @@
+{
+  "name": "bcdice-js",
+  "version": "0.1.0",
+  "description": "BCDice for JavaScript",
+  "main": "dist/bcdice.js",
+  "scripts": {
+    "build": "rake",
+    "clean": "rake clean",
+    "prepublish": "run-s clean build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ukatama/bcdice-js.git"
+  },
+  "keywords": [
+    "BCDice",
+    "JavaScript",
+    "browser"
+  ],
+  "author": "ukatama",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ukatama/bcdice-js/issues"
+  },
+  "homepage": "https://github.com/ukatama/bcdice-js#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.0.2"
+  }
+}

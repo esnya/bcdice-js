@@ -9,6 +9,7 @@ script:
 deploy:
   provider: npm
   email: dev.ukatama@gmail.com
+  skip_cleanup: true
   on:
     tags: true
   api_key:

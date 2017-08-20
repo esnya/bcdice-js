@@ -15,24 +15,26 @@ Transpiled by [Opal](http://opalrb.org/).
   [examples/browser](examples/browser)
 
 ## Usage
-1. Install with npm
+1. Install
     ```bash
     $ npm install --save bcdice-js
     ```
-2. Import the library
-  - CommonJS
-    ```js
-      const BCDice = require('bcdice-js');
-    ```
 
-  - ES Module
+2. Import
     ```js
-    import BCDice from 'bcdice-js'
+    import BCDice from 'bcdice-js'; // ES Modules
+    // or
+    const BCDice = require('bcdice-js'); // CommonJS
     ```
 
 3. Create BCDice instance
     ```js
     const bcdice = new BCDice();
+    ```
+
+4. Set dicebot
+    ```js
+    bcdice.setGameByTitle('SwordWorld2_0'); // Default: 'DiceBot'
     ```
 
 4. Set message and execute
@@ -45,3 +47,6 @@ Transpiled by [Opal](http://opalrb.org/).
 MIT License
 
 - BCDice: [Modified BSD license](https://github.com/torgtaitai/BCDice)
+
+## Changelog
+[CHANGELOG.md](https://github.com/ukatama/bcdice-js/blob/master/CHANGELOG.md)

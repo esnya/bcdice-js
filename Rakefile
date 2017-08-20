@@ -17,7 +17,7 @@ CLEAN.include(DIST_DIR)
 
 desc 'Convert converted Ruby codes'
 task :genRubyCodes => GEN_DIR do
-  require 'Pathname'
+  require 'pathname'
   Encoding.default_external = 'UTF-8'
 
   Dir.glob('BCDice/src/**/*.rb').each do |src|

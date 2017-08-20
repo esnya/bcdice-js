@@ -1,0 +1,14 @@
+{
+  "name": "bcdice-js-browser-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ukatama",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "webpack": "^3.5.5"
+  }
+}

@@ -9,7 +9,11 @@ Transpiled by [Opal](http://opalrb.org/).
   [examples/browser](examples/browser)
 
 ## Usage
-1. Import the library
+1. Install with npm
+    ```bash
+    $ npm install --save bcdice-js
+    ```
+2. Import the library
   - CommonJS
     ```js
       const BCDice = require('bcdice-js');
@@ -20,12 +24,12 @@ Transpiled by [Opal](http://opalrb.org/).
     import BCDice from 'bcdice-js'
     ```
 
-2. Create BCDice instance
+3. Create BCDice instance
     ```js
     const bcdice = new BCDice();
     ```
 
-3. Set message and execute
+4. Set message and execute
     ```js
     bcdice.setMessage('2d');
     console.log(bcdice.dice_command());

@@ -5,8 +5,9 @@
   "main": "dist/bcdice.js",
   "scripts": {
     "build": "rake",
+    "bundle:install": "bundle install",
     "clean": "rake clean",
-    "prepack": "run-s clean build",
+    "prepack": "run-s bundle:install clean build",
     "test": "jest",
     "version": "update-changelog && git add CHANGELOG.md"
   },

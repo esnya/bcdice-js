@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Changed wrapper modules to ES Modules
+    ```js
+    // To require as CommonJS
+
+    // Before
+    const BCDice = require('bcdice-js');
+
+    // After
+    const BCDice = require('bcdice-js').default;
+    // or
+    const BCDice = require('bcdice-js').BCDice;
+    ```
+
 ## [0.1.1] - 2017-08-20
 ### Added
 - Setup Travis CI

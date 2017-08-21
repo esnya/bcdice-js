@@ -24,7 +24,7 @@ Transpiled by [Opal](http://opalrb.org/).
     ```js
     import BCDice from 'bcdice-js'; // ES Modules
     // or
-    const BCDice = require('bcdice-js'); // CommonJS
+    const BCDice = require('bcdice-js').BCDice; // CommonJS
     ```
 
 3. Create BCDice instance

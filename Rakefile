@@ -118,11 +118,18 @@ desc 'Generate Ruby codes'
 task :generate => [:genRubyCodes, :genDiceBotLoader, :genExtratables] do
 end
 
+task :build => [:transpile, :opal] do
+end
+
 desc 'Build JavaScript code'
-task :build => [:generate, DIST_DIR] do
+task :transpile => [:generate, DIST_DIR] do
   builder = Opal::Builder.new
   builder.append_paths('.', './generated', './stub')
-  File.open('./dist/bcdice.js', 'w') do |file|
-    file.write(builder.build('./bcdicejs.rb').to_s)
-  end
+  File.binwrite 'dist/bcdice.ruby.js', '(function(Opal){' + builder.build('./bcdicejs.rb').to_s + '})(require(\'./opal\'))'
+end
+
+desc 'Build Opal'
+task :opal => [DIST_DIR] do
+  builder = Opal::Builder.new
+  File.binwrite 'dist/opal.js', "var Wrapper = {};\n(function(){\n" + builder.build('./opaljs.rb').to_s.gsub(/(def\.length = nil)/, '// \1') + "}).call(Wrapper);\nmodule.exports = Wrapper.Opal;"
 end

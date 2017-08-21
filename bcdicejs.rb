@@ -1,7 +1,3 @@
-require 'opal'
-require 'opal/platform'
-require 'native'
-
 ########## Ruby class patches ##########
 class Object
     def freeze
@@ -81,47 +77,8 @@ end
 #     `console.log('debug>', #{msg})`
 # end
 
-########## Wrapper of BCDice ##########
-
-def newBcDice(this)
-    maker = BCDiceMaker.new
-    bcdice = maker.newBcDice
-    this.JS[:_bcdice] = bcdice
-end
-
-proto = Native::Object.new
-proto.JS[:setDir] = -> (dir, prefix) {
-    `throw new Error('Unsupported')`
-    return nil
-}
-proto.JS[:isKeepSecretDice] = -> (b) {
-    `this`.JS[:_bcdice].isKeepSecretDice(b)
-}
-proto.JS[:getGameType] = -> () {
-    `this`.JS[:_bcdice].getGameType
-}
-proto.JS[:setDiceBot] = -> (diceBot) {
-    return if (diceBot.nil?)
-    `this`.JS[:_bcdice].setDiceBot(Object.const_get(diceBot).new)
-}
-proto.JS[:setIrcClient] = -> (client) {
-    `throw new Error('Unimplemented')`
-    `this`.JS[:_bcdice].setIrcClient(client)
-}
-proto.JS[:setMessage] = -> (message) {
-    `this`.JS[:_bcdice].setMessage(message);
-}
-proto.JS[:dice_command] = -> () {
-    `this`.JS[:_bcdice].dice_command
-}
-proto.JS[:setGameByTitle] = -> (gameTitle) {
-    `this`.JS[:_bcdice].setGameByTitle(gameTitle)
-}
-
 %x{
-    function BCDice() {
-        #{ newBcDice(`this`) };
-    }
-    BCDice.prototype = #{ proto }
-    module.exports = BCDice;
+    module.exports = {
+        BCDiceMaker: #{ BCDiceMaker },
+    };
 }

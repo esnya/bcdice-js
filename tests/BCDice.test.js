@@ -2,7 +2,7 @@ describe('BCDice', () => {
     var BCDice;
 
     it('is valid module', () => {
-        BCDice = require('../');
+        BCDice = require('../').default;
     });
 
     var bcdice;

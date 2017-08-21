@@ -7,7 +7,7 @@ const clearElement = document.getElementById('clear');
 const resultsElement = document.getElementById('results');
 
 rollElement.addEventListener('click', () => {
-    const bcdice = new BCDice;
+    const bcdice = new BCDice();
     bcdice.setGameByTitle(diceBotElement.value || 'DiceBot');
 
     bcdice.setMessage(inputElement.value);

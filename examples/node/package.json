@@ -7,6 +7,6 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "bcdice-js": "^0.1.0"
+    "bcdice-js": "^0.2.0"
   }
 }

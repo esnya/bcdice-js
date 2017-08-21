@@ -2,7 +2,7 @@ describe('BCDice', () => {
     var BCDice;
 
     it('is valid module', () => {
-        BCDice = require('../').default;
+        BCDice = require('../dist/BCDice').default;
     });
 
     var bcdice;
@@ -25,9 +25,12 @@ describe('BCDice', () => {
     });
 
     it('.setDiceBot', () => {
-        bcdice.setDiceBot('SwordWorld2_0');
-        expect(bcdice.getGameType()).toEqual('SwordWorld2.0');
-    })
+        const DiceBotLoaderList = require('../dist/DiceBotLoaderList').default;
+
+        const diceBot = DiceBotLoaderList.find('SW').loadDiceBot();
+        bcdice.setDiceBot(diceBot);
+        expect(bcdice.getGameType()).toEqual('SwordWorld');
+    });
 
     it('.setIrcClient', () => {
         expect(() => bcdice.setIrcClient(null)).toThrow();

@@ -1,4 +1,4 @@
-import BCDice from 'bcdice-js';
+import BCDice, { DiceBotLoader } from 'bcdice-js';
 
 const diceBotElement = document.getElementById('diceBot');
 const inputElement = document.getElementById('input');
@@ -6,11 +6,28 @@ const rollElement = document.getElementById('roll');
 const clearElement = document.getElementById('clear');
 const resultsElement = document.getElementById('results');
 
-rollElement.addEventListener('click', () => {
-    const bcdice = new BCDice();
-    bcdice.setGameByTitle(diceBotElement.value || 'DiceBot');
+const diceBotTable = {};
+const diceBots = DiceBotLoader.collectDiceBots().forEach(diceBot => {
+    const gameType = diceBot.gameType();
 
-    bcdice.setMessage(inputElement.value);
+    diceBotTable[gameType] = diceBot;
+
+    const optionElement = document.createElement('option');
+    optionElement.value = gameType;
+    optionElement.innerText = gameType;
+
+    diceBotElement.appendChild(optionElement);
+});
+
+rollElement.addEventListener('click', () => {
+    const gameType = diceBotElement.value || 'DiceBot';
+    const message = inputElement.value;
+    console.log({ gameType, message });
+
+    const bcdice = new BCDice();
+    bcdice.setDiceBot(diceBotTable[gameType]);
+
+    bcdice.setMessage(message);
     const result = bcdice.dice_command();
 
     const resultElement = document.createElement('p');

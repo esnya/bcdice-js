@@ -54,17 +54,33 @@ task :genDiceBotLoader => GEN_DIR do
   end
 
   class DiceBotLoaderList
+    def self.generateStaticDiceBotLoader()
+      File.open(GEN_DIR + '/StaticDiceBotLoader.rb', 'w') do |file|
+        DiceBotLoader.getFilenames.each do |filename|
+          file.puts("require 'diceBot/" + filename + "'")
+        end
+      end
+    end
+
     def self.generateStaticDiceBotLoaderList()
       File.open(GEN_DIR + '/StaticDiceBotLoaderList.rb', 'w') do |file|
-        #@loaders.each do |loader|
-          DiceBotLoader.getFilenames.each do |filename|
-            file.puts("require 'diceBot/" + filename + "'")
-          end
-        #end
+        file.puts("class StaticDiceBotLoaderList")
+        file.puts("  BOT_NAMES = [")
+
+        DiceBotLoader.getFilenames.each do |filename|
+          file.puts("    '#{filename}',")
+        end
+
+        file.puts("  ]")
+        file.puts("  def self.getBotNames()")
+        file.puts("    BOT_NAMES")
+        file.puts("  end")
+        file.puts("end")
       end
     end
   end
 
+  DiceBotLoaderList.generateStaticDiceBotLoader()
   DiceBotLoaderList.generateStaticDiceBotLoaderList()
 end
 

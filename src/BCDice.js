@@ -2,6 +2,7 @@
 
 import { BCDiceMaker } from '../dist/bcdice.ruby.js';
 import Opal from '../dist/opal';
+import DiceBot from './DiceBot';
 
 export default class BCDice {
     constructor() {
@@ -25,7 +26,8 @@ export default class BCDice {
     setDiceBot(diceBot) {
         if (!diceBot) return;
 
-        this._bcdice.$setDiceBot(Opal.Object.$const_get(diceBot).$new());
+        if (!(diceBot instanceof DiceBot)) throw new Error('Invalit argument type');
+        this._bcdice.$setDiceBot(diceBot._diceBot);
     }
 
     // eslint-disable-next-line no-unused-vars

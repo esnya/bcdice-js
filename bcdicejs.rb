@@ -18,6 +18,7 @@ class String
 end
 
 require 'diceBot/DiceBot'
+require 'StaticDiceBotLoader'
 require 'StaticDiceBotLoaderList'
 require 'StaticTableFileData'
 require 'bcdiceCore'
@@ -73,6 +74,14 @@ class TableFileData
       end
 end
 
+class DiceBotLoader
+    def self.collectDiceBots
+        StaticDiceBotLoaderList.getBotNames().map { |botName|
+            Object.const_get(botName).new
+        }
+    end
+end
+
 # def debug(*msg)
 #     `console.log('debug>', #{msg})`
 # end
@@ -80,5 +89,7 @@ end
 %x{
     module.exports = {
         BCDiceMaker: #{ BCDiceMaker },
+        DiceBotLoader: #{ DiceBotLoader },
+        DiceBotLoaderList: #{ DiceBotLoaderList },
     };
 }

@@ -85,11 +85,3 @@ end
 # def debug(*msg)
 #     `console.log('debug>', #{msg})`
 # end
-
-%x{
-    module.exports = {
-        BCDiceMaker: #{ BCDiceMaker },
-        DiceBotLoader: #{ DiceBotLoader },
-        DiceBotLoaderList: #{ DiceBotLoaderList },
-    };
-}

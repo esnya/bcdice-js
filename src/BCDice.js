@@ -1,13 +1,13 @@
 /* eslint no-underscore-dangle: off */
 
-import { BCDiceMaker } from '../dist/bcdice.ruby.js';
-import Opal from '../dist/opal';
+import '../lib/bcdice.ruby.js';
+import opal from './opal';
 import DiceBot from './DiceBot';
 
 export default class BCDice {
     constructor() {
-        const maker = BCDiceMaker.$new();
-        this._bcdice = maker.$newBcDice();
+        const maker = opal(Opal => Opal.BCDiceMaker.$new());
+        this._bcdice = opal(() => maker.$newBcDice());
     }
 
     // eslint-disable-next-line no-unused-vars
@@ -16,18 +16,18 @@ export default class BCDice {
     }
 
     isKeepSecretDice(b) {
-        this._bcdice.$isKeepSecretDice(b);
+        opal(() => this._bcdice.$isKeepSecretDice(b));
     }
 
     getGameType() {
-        return this._bcdice.$getGameType();
+        return opal(() => this._bcdice.$getGameType());
     }
 
     setDiceBot(diceBot) {
         if (!diceBot) return;
 
         if (!(diceBot instanceof DiceBot)) throw new Error('Invalit argument type');
-        this._bcdice.$setDiceBot(diceBot._diceBot);
+        opal(() => this._bcdice.$setDiceBot(diceBot._diceBot));
     }
 
     // eslint-disable-next-line no-unused-vars
@@ -36,7 +36,7 @@ export default class BCDice {
     }
 
     setMessage(message) {
-        this._bcdice.$setMessage(message);
+        opal(() => this._bcdice.$setMessage(message));
     }
 
     // eslint-disable-next-line camelcase
@@ -44,10 +44,10 @@ export default class BCDice {
         return this.diceCommand();
     }
     diceCommand() {
-        return this._bcdice.$dice_command();
+        return opal(() => this._bcdice.$dice_command());
     }
 
     setGameByTitle(gameTitle) {
-        return this._bcdice.$setGameByTitle(gameTitle);
+        return opal(() => this._bcdice.$setGameByTitle(gameTitle));
     }
 }

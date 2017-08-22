@@ -16,7 +16,7 @@ GEN_DIR = 'generated'
 directory GEN_DIR
 CLEAN.include(GEN_DIR)
 
-DIST_DIR = 'dist'
+DIST_DIR = 'lib'
 directory DIST_DIR
 CLEAN.include(DIST_DIR)
 
@@ -141,11 +141,11 @@ desc 'Build JavaScript code'
 task :transpile => [:generate, DIST_DIR] do
   builder = Opal::Builder.new
   builder.append_paths('.', './generated', './stub')
-  File.binwrite 'dist/bcdice.ruby.js', '(function(Opal){' + builder.build('./bcdicejs.rb').to_s + '})(require(\'./opal\'))'
+  File.binwrite 'lib/bcdice.ruby.js', 'require(\'./opal\')(function(Opal){' + builder.build('./bcdicejs.rb').to_s + '})'
 end
 
 desc 'Build Opal'
 task :opal => [DIST_DIR] do
   builder = Opal::Builder.new
-  File.binwrite 'dist/opal.js', "var Wrapper = {};\n(function(){\n" + builder.build('./opaljs.rb').to_s.gsub(/(def\.length = nil)/, '// \1') + "}).call(Wrapper);\nmodule.exports = Wrapper.Opal;"
+  File.binwrite 'lib/opal.ruby.js', "var Wrapper = {};\n(function(){\n" + builder.build('./opaljs.rb').to_s.gsub(/(def\.length = nil)/, '// \1') + "}).call(Wrapper);\nmodule.exports = Wrapper.Opal;"
 end

@@ -1,7 +1,7 @@
-import Opal from '../dist/opal';
+import opal from './opal';
 
 export function isNil(value) {
-    return value === null || value === Opal.nil;
+    return opal(Opal => value === null || value === Opal.nil);
 }
 
 export function nil2null(value) {

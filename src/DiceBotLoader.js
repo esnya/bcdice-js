@@ -1,17 +1,20 @@
-import { DiceBotLoader as RubyDiceBotLoader } from '../dist/bcdice.ruby.js';
+import '../dist/bcdice.ruby.js';
+import opal from './opal';
 import DiceBot from './DiceBot';
 import { isNil } from './utilities';
 
 export default class DiceBotLoader {
     static loadUnknownGame(gameTitle) {
-        const diceBot = RubyDiceBotLoader.$loadUnknownGame(gameTitle);
+        const diceBot = opal(Opal => Opal.DiceBotLoader.$loadUnknownGame(gameTitle));
         if (isNil(diceBot)) return null;
 
         return new DiceBot(diceBot);
     }
 
     static collectDiceBots() {
-        return RubyDiceBotLoader.$collectDiceBots().map(diceBot => new DiceBot(diceBot));
+        return opal(
+            Opal => Opal.DiceBotLoader.$collectDiceBots().map(diceBot => new DiceBot(diceBot))
+        );
     }
 
     constructor(diceBotLoader) {
@@ -19,10 +22,11 @@ export default class DiceBotLoader {
     }
 
     match() {
-        return this._diceBotLoader.$match();
+        return opal(() => this._diceBotLoader.$match());
     }
 
     loadDiceBot() {
-        return new DiceBot(this._diceBotLoader.$loadDiceBot());
+        const diceBot = opal(() => this._diceBotLoader.$loadDiceBot());
+        return new DiceBot(diceBot);
     }
 }

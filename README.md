@@ -43,6 +43,12 @@ Transpiled by [Opal](http://opalrb.org/).
     console.log(bcdice.dice_command());
     ```
 
+## Contribution
+- Open [Issue](https://github.com/ukatama/bcdice-js/issues) or [Pull Request](https://github.com/ukatama/bcdice-js/pulls)
+- Supported Language
+  - English
+  - Japanese(日本語)
+
 ## License
 MIT License
 

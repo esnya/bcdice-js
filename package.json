@@ -2,7 +2,6 @@
   "name": "bcdice-js",
   "version": "0.3.0",
   "description": "BCDice for JavaScript",
-  "private": true,
   "main": "lib/index.js",
   "scripts": {
     "build": "run-s build:*",

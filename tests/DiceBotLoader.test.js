@@ -2,7 +2,7 @@ describe('DiceBotLoader', () => {
     var DiceBotLoader;
 
     it('is valid module', () => {
-        DiceBotLoader = require('../dist/DiceBotLoader').default;
+        DiceBotLoader = require('../lib/DiceBotLoader').default;
     });
 
     it('is defined', () => {
@@ -11,7 +11,7 @@ describe('DiceBotLoader', () => {
 
     describe('.loadUnknownGame', () => {
         it('loads diceBot', () => {
-            const DiceBot = require('../dist/DiceBot').default;
+            const DiceBot = require('../lib/DiceBot').default;
 
             const diceBot = DiceBotLoader.loadUnknownGame('SwordWorld2_0');
             expect(diceBot).toBeInstanceOf(DiceBot);
@@ -28,7 +28,7 @@ describe('DiceBotLoader', () => {
             expect(diceBots).toBeInstanceOf(Array);
             expect(diceBots.length).toBeGreaterThan(0);
 
-            const DiceBot = require('../dist/DiceBot').default;
+            const DiceBot = require('../lib/DiceBot').default;
             expect(diceBots[0]).toBeInstanceOf(DiceBot);
         });
     });

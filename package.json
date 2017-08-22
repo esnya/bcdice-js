@@ -2,11 +2,11 @@
   "name": "bcdice-js",
   "version": "0.2.0",
   "description": "BCDice for JavaScript",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "run-s build:*",
     "build:rake": "rake",
-    "build:babel": "babel -s true -d dist src",
+    "build:babel": "babel -s true -d lib src",
     "bundle:install": "bundle install",
     "clean": "rake clean",
     "prepack": "run-s bundle:install clean build",

@@ -2,7 +2,7 @@ describe('DiceBot', () => {
     var DiceBot;
 
     it('is valid module', () => {
-        DiceBot = require('../dist/DiceBot').default;
+        DiceBot = require('../lib/DiceBot').default;
     });
 
     it('is defined', () => {

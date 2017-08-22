@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: off */
 
-import '../dist/bcdice.ruby.js';
+import '../lib/bcdice.ruby.js';
 import opal from './opal';
 import DiceBot from './DiceBot';
 

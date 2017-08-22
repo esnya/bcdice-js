@@ -3,7 +3,7 @@ const FunctionPrototype = Function.prototype;
 const FunctionPrototypeKeys = Object.keys(FunctionPrototype);
 
 // eslint-disable-next-line
-const Opal = require('../dist/opal.ruby.js');
+const Opal = require('../lib/opal.ruby.js');
 Object.keys(Function.prototype).forEach(key => {
     if (FunctionPrototypeKeys.indexOf(key) < 0) {
         OpalFunctionPrototype[key] = Function.prototype[key];

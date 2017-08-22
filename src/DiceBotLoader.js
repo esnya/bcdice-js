@@ -1,4 +1,4 @@
-import '../dist/bcdice.ruby.js';
+import '../lib/bcdice.ruby.js';
 import opal from './opal';
 import DiceBot from './DiceBot';
 import { isNil } from './utilities';

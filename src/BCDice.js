@@ -3,6 +3,7 @@
 import '../lib/bcdice.ruby.js';
 import opal from './opal';
 import DiceBot from './DiceBot';
+import { nil2null } from './utilities';
 
 export default class BCDice {
     constructor() {
@@ -45,6 +46,15 @@ export default class BCDice {
     }
     diceCommand() {
         return opal(() => this._bcdice.$dice_command());
+    }
+
+    setCollectRandResult(b) {
+        opal(() => this._bcdice.$setCollectRandResult(b));
+    }
+
+    getRandResults() {
+        const results = opal(() => this._bcdice.$getRandResults());
+        return nil2null(results);
     }
 
     setGameByTitle(gameTitle) {

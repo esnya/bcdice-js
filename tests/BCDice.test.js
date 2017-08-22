@@ -41,7 +41,7 @@ describe('BCDice', () => {
     });
 
     it('.dice_command', () => {
-        const [ result, isSecret ] = bcdice.dice_command();
+        const [result, isSecret] = bcdice.dice_command();
 
         expect(result).toBeDefined();
         expect(result).not.toEqual('1');
@@ -52,5 +52,35 @@ describe('BCDice', () => {
         bcdice.setGameByTitle('Cthulhu7th');
 
         expect(bcdice.getGameType()).toEqual('Cthulhu7th');
+    });
+
+    it('.setCollectRandResult', () => {
+        bcdice.setGameByTitle('DiceBot');
+
+        bcdice.setMessage('2D');
+        bcdice.setCollectRandResult(true);
+        bcdice.dice_command();
+    });
+
+    describe('.getRandResults', () => {
+        it('returns rand results', () => {
+            const randResults = bcdice.getRandResults();
+
+            expect(randResults).toBeInstanceOf(Array);
+            expect(randResults.length).toBe(2);
+
+            expect(typeof randResults[0][0]).toEqual('number');
+            expect(randResults[0][1]).toBe(6);
+
+            expect(typeof randResults[1][0]).toEqual('number');
+            expect(randResults[1][1]).toBe(6);
+        });
+
+        it('returns null if not collected', () => {
+            bcdice.setCollectRandResult(false);
+            bcdice.dice_command();
+
+            expect(bcdice.getRandResults()).toBe(null);
+        });
     });
 });

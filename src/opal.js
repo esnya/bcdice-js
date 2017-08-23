@@ -2,36 +2,59 @@ const OpalFunctionPrototype = {};
 const FunctionPrototype = Function.prototype;
 const FunctionPrototypeKeys = Object.keys(FunctionPrototype);
 
-// eslint-disable-next-line
-const Opal = require('../lib/opal.ruby.js');
-Object.keys(Function.prototype).forEach(key => {
-    if (FunctionPrototypeKeys.indexOf(key) < 0) {
-        OpalFunctionPrototype[key] = Function.prototype[key];
-        delete Function.prototype[key];
-    }
-});
+const TargetClass = [
+    Boolean,
+    Function,
+];
 
-function up() {
-    Object.assign(Function.prototype, OpalFunctionPrototype);
-}
-function down() {
-    Object.keys(Function.prototype).forEach(key => {
-        if (FunctionPrototypeKeys.indexOf(key) < 0) delete Function.prototype[key];
+const OriginalKeys = {};
+function restoreOriginal() {
+    TargetClass.forEach(targetClass => {
+        Object.keys(targetClass.prototype)
+            .filter(key => OriginalKeys[targetClass.name].indexOf(key) < 0)
+            .forEach(key => {
+                // eslint-disable-next-line no-param-reassign
+                delete targetClass.prototype[key];
+            });
     });
 }
 
+function backupOriginalKeys() {
+    TargetClass.forEach(targetClass => {
+        OriginalKeys[targetClass.name] = Object.keys(targetClass.prototype);
+    });
+}
+
+const OpalPrototypes = {};
+function restoreOpal() {
+    TargetClass.forEach(targetClass => {
+        Object.assign(targetClass.prototype, OpalPrototypes[targetClass.name]);
+    });
+}
+function backupOpalKeys() {
+    TargetClass.forEach(targetClass => {
+        OpalPrototypes[targetClass.name] = Object.assign({}, targetClass.prototype);
+    });
+}
+
+backupOriginalKeys();
+// eslint-disable-next-line
+const Opal = require('../lib/opal.ruby.js');
+backupOpalKeys();
+restoreOriginal();
+
 module.exports = function opal(callback) {
     try {
-        up();
+        restoreOpal();
 
         // eslint-disable-next-line
         const result = callback(Opal);
 
-        down();
+        restoreOriginal();
 
         return result;
     } catch (e) {
-        down();
+        restoreOriginal();
         throw e;
     }
 };

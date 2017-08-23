@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Fix destruction of Boolean.prototype
+
 ## [0.3.0] - 2017-08-23
 ### Added
 - Rand result collection

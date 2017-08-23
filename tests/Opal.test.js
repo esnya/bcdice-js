@@ -1,9 +1,14 @@
 describe('Opal', () => {
+    const func = Object.keys(Function.prototype);
+    const b = Object.keys(Boolean.prototype);
+
+    require('../lib/opal');
+
     it('keeps Function.prototype', () => {
-        const prev = Object.keys(Function.prototype);
+        expect(Object.keys(Function.prototype)).toEqual(func);
+    });
 
-        require('../lib/opal');
-
-        expect(Object.keys(Function.prototype)).toEqual(prev);
+    it('keeps Boolean.prototype', () => {
+        expect(Object.keys(Boolean.prototype)).toEqual(b);
     });
 });

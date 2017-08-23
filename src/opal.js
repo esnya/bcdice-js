@@ -1,10 +1,10 @@
-const OpalFunctionPrototype = {};
-const FunctionPrototype = Function.prototype;
-const FunctionPrototypeKeys = Object.keys(FunctionPrototype);
-
 const TargetClass = [
+    Array,
     Boolean,
     Function,
+    Number,
+    RegExp,
+    String,
 ];
 
 const OriginalKeys = {};

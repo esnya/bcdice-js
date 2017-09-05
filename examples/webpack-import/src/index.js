@@ -1,5 +1,4 @@
 // import BCDice, { DiceBotLoader, DiceBotResolver } from 'bcdice-js';
-// import webpackDynamicLoader from 'bcdice-js/lib/webpackDynamicLoader';
 import BCDice, { DiceBotLoader, DiceBotResolver } from '../../../';
 
 function customLoader(filename) {

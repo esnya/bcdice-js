@@ -11,7 +11,7 @@ Transpiled by [Opal](http://opalrb.org/).
 ## Examples
 - Node.js (CommonJS):
   [examples/node](examples/node)
-- Browser (simple, webpack):
+- Browser with Webpack (slower, simple):
   [examples/browser](examples/browser)
 - Webpack Dynamic Import (faster, recommended):
   [examples/webpak-import](examples/webpack-imoprt)

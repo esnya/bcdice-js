@@ -6,7 +6,5 @@
   "author": "ukatama",
   "license": "MIT",
   "devDependencies": {},
-  "dependencies": {
-    "bcdice-js": "^0.2.0"
-  }
+  "dependencies": {}
 }

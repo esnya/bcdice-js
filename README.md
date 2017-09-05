@@ -11,8 +11,10 @@ Transpiled by [Opal](http://opalrb.org/).
 ## Examples
 - Node.js (CommonJS):
   [examples/node](examples/node)
-- Browser:
+- Browser (simple, webpack):
   [examples/browser](examples/browser)
+- Webpack Dynamic Import (faster, recommended):
+  [examples/webpak-import](examples/webpack-imoprt)
 
 ## Usage
 1. Install
@@ -27,17 +29,24 @@ Transpiled by [Opal](http://opalrb.org/).
     const BCDice = require('bcdice-js').BCDice; // CommonJS
     ```
 
-3. Create BCDice instance
+3. Preload dicebots (**Only on the browser!!**)
+    ```
+    import 'bcdice-js/lib/preload-dicebots';
+    // or
+    require('bcdice-js/lib/preload-dicebots');
+    ```
+
+4. Create BCDice instance
     ```js
     const bcdice = new BCDice();
     ```
 
-4. Set dicebot
+5. Set dicebot
     ```js
     bcdice.setGameByTitle('SwordWorld2_0'); // Default: 'DiceBot'
     ```
 
-4. Set message and execute
+6. Set message and execute
     ```js
     bcdice.setMessage('2d');
     console.log(bcdice.dice_command());

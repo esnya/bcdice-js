@@ -1,5 +1,5 @@
 {
-  "name": "bcdice-js-browser-example",
+  "name": "bcdice-js-webpack-import-example",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
@@ -11,6 +11,9 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-dynamic-import-webpack": "^1.0.1",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1"
   }

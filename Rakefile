@@ -6,6 +6,7 @@ require 'opal'
 require 'pathname'
 require 'rake/testtask'
 require 'rake/clean'
+require 'diceBot/DiceBot'
 require 'diceBot/DiceBotLoader'
 require 'diceBot/DiceBotLoaderList'
 require 'TableFileData'
@@ -20,6 +21,11 @@ DIST_DIR = 'lib'
 directory DIST_DIR
 CLEAN.include(DIST_DIR)
 
+DIST_DICEBOT_DIR = 'lib/diceBot'
+directory DIST_DICEBOT_DIR
+
+def debug(*msg)
+end
 
 desc 'Convert converted Ruby codes'
 task :genRubyCodes => GEN_DIR do
@@ -37,51 +43,60 @@ task :genRubyCodes => GEN_DIR do
   end
 end
 
+class DiceBotLoader
+  def self.getFilenames()
+    botFiles = Dir.glob('BCDice/src/diceBot/*.rb')
+    botNames =
+      botFiles.map { |botFile| File.basename(botFile, '.rb').untaint }
+    validBotNames =
+      # 特別な名前のものを除外する
+      (botNames - BOT_NAMES_TO_IGNORE).
+      # 正しいクラス名になるものだけ選ぶ
+      select { |botName| /\A[A-Z]/ === botName }
+  end
+end
+
+class DiceBotLoaderList
+  def self.generateStaticDiceBotLoaderList()
+    File.open(GEN_DIR + '/StaticDiceBotLoaderList.rb', 'w') do |file|
+      file.puts("class StaticDiceBotLoaderList")
+      file.puts("  BOT_NAMES = [")
+
+      DiceBotLoader.getFilenames.each do |filename|
+        loader = DiceBotLoaderList.find(filename)
+        diceBot =
+          if loader
+            loader.loadDiceBot
+          else
+            DiceBotLoader.loadUnknownGame(filename)
+          end
+        file.puts("    ['#{filename}', '#{diceBot.gameType}', '#{diceBot.gameName}'],") if diceBot
+      end
+
+      file.puts("  ]")
+      file.puts("  def self.getBotNames()")
+      file.puts("    BOT_NAMES")
+      file.puts("  end")
+      file.puts("end")
+    end
+  end
+
+  def self.generatePreloader()
+    File.open(DIST_DIR + '/preload-dicebots.js', 'w') do |file|
+      DiceBotLoader.getFilenames.each do |filename|
+        file.puts("require('./diceBot/#{filename}');")
+      end
+
+      file.puts("require('./bcdice');")
+      file.puts("require('./opal')(function (Opal) { Opal.DiceBotResolver.$setMode('static'); });")
+    end
+  end
+end
+
 desc 'Generate DiceBot loader'
-task :genDiceBotLoader => GEN_DIR do
-
-  class DiceBotLoader
-    def self.getFilenames()
-      botFiles = Dir.glob('BCDice/src/diceBot/*.rb')
-      botNames =
-        botFiles.map { |botFile| File.basename(botFile, '.rb').untaint }
-      validBotNames =
-        # 特別な名前のものを除外する
-        (botNames - BOT_NAMES_TO_IGNORE).
-        # 正しいクラス名になるものだけ選ぶ
-        select { |botName| /\A[A-Z]/ === botName }
-    end
-  end
-
-  class DiceBotLoaderList
-    def self.generateStaticDiceBotLoader()
-      File.open(GEN_DIR + '/StaticDiceBotLoader.rb', 'w') do |file|
-        DiceBotLoader.getFilenames.each do |filename|
-          file.puts("require 'diceBot/" + filename + "'")
-        end
-      end
-    end
-
-    def self.generateStaticDiceBotLoaderList()
-      File.open(GEN_DIR + '/StaticDiceBotLoaderList.rb', 'w') do |file|
-        file.puts("class StaticDiceBotLoaderList")
-        file.puts("  BOT_NAMES = [")
-
-        DiceBotLoader.getFilenames.each do |filename|
-          file.puts("    '#{filename}',")
-        end
-
-        file.puts("  ]")
-        file.puts("  def self.getBotNames()")
-        file.puts("    BOT_NAMES")
-        file.puts("  end")
-        file.puts("end")
-      end
-    end
-  end
-
-  DiceBotLoaderList.generateStaticDiceBotLoader()
+task :genDiceBotLoader => [GEN_DIR, DIST_DIR] do
   DiceBotLoaderList.generateStaticDiceBotLoaderList()
+  DiceBotLoaderList.generatePreloader()
 end
 
 desc 'Generate extratables'
@@ -134,7 +149,7 @@ desc 'Generate Ruby codes'
 task :generate => [:genRubyCodes, :genDiceBotLoader, :genExtratables] do
 end
 
-task :build => [:transpile, :opal] do
+task :build => [:transpile, :dicebot, :opal] do
 end
 
 desc 'Build JavaScript code'
@@ -142,6 +157,21 @@ task :transpile => [:generate, DIST_DIR] do
   builder = Opal::Builder.new
   builder.append_paths('.', './generated', './stub')
   File.binwrite 'lib/bcdice.ruby.js', 'require(\'./opal\')(function(Opal){' + builder.build('./bcdicejs.rb').to_s + '})'
+end
+
+desc 'Build DiceBot JavaSciprtCode'
+task :dicebot => [:generate, DIST_DICEBOT_DIR] do
+  DiceBotLoader.getFilenames.each do |filename|
+    src = GEN_DIR + '/diceBot/' + filename + '.rb'
+    dst = DIST_DICEBOT_DIR + '/' + filename + '.js'
+    path = Pathname.new(src).relative_path_from(Pathname.new(GEN_DIR)).to_s
+    dst = (Pathname.new(DIST_DICEBOT_DIR) / Pathname.new(src).relative_path_from(Pathname.new(GEN_DIR + '/diceBot/'))).to_s.gsub(/rb$/, 'js')
+    path = Pathname.new(src).relative_path_from(Pathname.new(GEN_DIR)).to_s
+    className = Pathname.new(src).relative_path_from(Pathname.new(GEN_DIR + '/diceBot/')).to_s.gsub(/\.rb$/, '')
+    builder = Opal::Builder.new
+    builder.append_paths('.', './generated', './stub')
+    File.binwrite dst, 'require(\'../opal\')(function(Opal){' + builder.build(path).to_s + '})'
+  end
 end
 
 desc 'Build Opal'

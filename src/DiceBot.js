@@ -2,7 +2,11 @@ import opal from './opal';
 
 export default class DiceBot {
     constructor(diceBot) {
-        this._diceBot = diceBot;
+        if (diceBot) {
+            this._diceBot = diceBot;
+        } else {
+            this._diceBot = opal(Opal => Opal.DiceBot.$new());
+        }
     }
 
     gameName() {
@@ -11,5 +15,9 @@ export default class DiceBot {
 
     gameType() {
         return opal(() => this._diceBot.$gameType());
+    }
+
+    postSet() {
+        opal(() => this._diceBot.$postSet());
     }
 }

@@ -22,6 +22,16 @@ describe('DiceBotLoader', () => {
         });
     });
 
+    describe('.collectDiceBotDescriptions', () => {
+        it('enumerates diceBotDescriptions', () => {
+            const descs = DiceBotLoader.collectDiceBotDescriptions();
+            expect(descs).toBeInstanceOf(Array);
+            expect(descs.length).toBeGreaterThan(0);
+
+            const desc = descs[0];
+            expect(desc.length).toBe(3);
+        });
+    });
     describe('.collectDiceBots', () => {
         it('enumerates diceBots', () => {
             const diceBots = DiceBotLoader.collectDiceBots();

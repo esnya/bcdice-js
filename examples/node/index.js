@@ -1,4 +1,5 @@
-const BCDice = require('bcdice-js').BCDice;
+// const BCDice = require('bcdice-js').BCDice;
+const BCDice = require('../..').BCDice;
 
 const bcdice = new BCDice();
 

@@ -3,6 +3,9 @@
 import '../lib/bcdice.ruby.js';
 import opal from './opal';
 import DiceBot from './DiceBot';
+import DiceBotLoader from './DiceBotLoader';
+import DiceBotLoaderList from './DiceBotLoaderList';
+import DiceBotResolver from './DiceBotResolver';
 import { nil2null } from './utilities';
 
 export default class BCDice {
@@ -58,6 +61,16 @@ export default class BCDice {
     }
 
     setGameByTitle(gameTitle) {
-        return opal(() => this._bcdice.$setGameByTitle(gameTitle));
+        if (DiceBotResolver.isAsync()) {
+            const loader = DiceBotLoaderList.find(gameTitle);
+
+            return (loader ? loader.loadDiceBot() : DiceBotLoader.loadUnknownGame(gameTitle)).then(diceBot => {
+                if (diceBot) this.setDiceBot(diceBot);
+                else this.setDiceBot(new DiceBot());
+                diceBot.postSet();
+            });
+        } else {
+            return opal(() => this._bcdice.$setGameByTitle(gameTitle));
+        }
     }
 }

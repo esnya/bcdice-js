@@ -8,6 +8,15 @@ module.exports = {
     publicPath: '/assets/',
     filename: 'bundle.js',
   },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
   devServer: {
     contentBase: path.resolve(__dirname, './dist'),
   },

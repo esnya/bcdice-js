@@ -2,4 +2,3 @@ node_modules
 /lib
 /generated
 /Gemfile.lock
-/yarn.lock

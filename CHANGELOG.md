@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Add DiceBot.getHelpMessage() and DiceBot.info()
+
 ## [0.4.0] - 2017-09-05
 ### Changed
 - Implement dynamic dicebot loader

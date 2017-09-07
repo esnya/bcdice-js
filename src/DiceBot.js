@@ -20,4 +20,15 @@ export default class DiceBot {
     postSet() {
         opal(() => this._diceBot.$postSet());
     }
+
+    getHelpMessage() {
+        return opal(() => this._diceBot.$getHelpMessage());
+    }
+
+    info() {
+        const result = opal(() => this._diceBot.$info().$$smap);
+        return Object.assign({
+            prefixes: result.prefixs,
+        }, result);
+    }
 }

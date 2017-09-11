@@ -1,11 +1,11 @@
 describe('AsyncLoader', () => {
-    const DiceBotLoader = require('../lib/DiceBotLoader').default;
+    const DiceBotLoader = require('./DiceBotLoader').default;
 
     var DiceBotResolver;
     var customLoader;
     describe('DiceBotResolber', () => {
         it('is valid module', () => {
-            DiceBotResolver = require('../lib/DiceBotResolver').default;
+            DiceBotResolver = require('./DiceBotResolver').default;
         });
 
         it('accepts custom async loader', () => {
@@ -23,7 +23,7 @@ describe('AsyncLoader', () => {
     });
 
     describe('DiceBotLoader', () => {
-        const DiceBot = require('../lib/DiceBot').default;
+        const DiceBot = require('./DiceBot').default;
 
         it('loads diceBot', () => {
             const result = DiceBotLoader.loadUnknownGame('SwordWorld2_0');
@@ -37,7 +37,7 @@ describe('AsyncLoader', () => {
     });
 
     describe('BCDice', () => {
-        const BCDice = require('../lib/BCDice').default;
+        const BCDice = require('./BCDice').default;
         const bcdice = new BCDice();
 
         it('loads diceBoy', () =>

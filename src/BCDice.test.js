@@ -2,7 +2,7 @@ describe('BCDice', () => {
     var BCDice;
 
     it('is valid module', () => {
-        BCDice = require('../lib/BCDice').default;
+        BCDice = require('./BCDice').default;
     });
 
     var bcdice;
@@ -25,7 +25,7 @@ describe('BCDice', () => {
     });
 
     it('.setDiceBot', () => {
-        const DiceBotLoaderList = require('../lib/DiceBotLoaderList').default;
+        const DiceBotLoaderList = require('./DiceBotLoaderList').default;
 
         const diceBot = DiceBotLoaderList.find('SW').loadDiceBot();
         bcdice.setDiceBot(diceBot);

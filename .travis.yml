@@ -1,12 +1,14 @@
 language: node_js
 node_js:
-- node
-- lts/*
+  - node
+  - lts/*
 before_install:
-- bundle install
+  - bundle install
 script:
-- npm run build
-- npm test
+  - yarn build
+  - yarn test -- --coverage --coverageReporters lcov
+after_success:
+  - cat ./coverage/lcov.info | coveralls
 deploy:
   provider: npm
   email: dev.ukatama@gmail.com

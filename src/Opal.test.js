@@ -2,7 +2,7 @@ describe('Opal', () => {
     const func = Object.keys(Function.prototype);
     const b = Object.keys(Boolean.prototype);
 
-    require('../lib/opal');
+    require('./opal');
 
     it('keeps Function.prototype', () => {
         expect(Object.keys(Function.prototype)).toEqual(func);

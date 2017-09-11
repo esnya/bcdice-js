@@ -2,7 +2,7 @@ describe('DiceBot', () => {
     var DiceBot;
 
     it('is valid module', () => {
-        DiceBot = require('../lib/DiceBot').default;
+        DiceBot = require('./DiceBot').default;
     });
 
     it('is defined', () => {
@@ -13,7 +13,7 @@ describe('DiceBot', () => {
     var diceBot;
     describe('getHelpMessage', () => {
         it('returns helpMessage', () => {
-            DiceBotLoader = require('../lib/DiceBotLoader').default;
+            DiceBotLoader = require('./DiceBotLoader').default;
             diceBot = DiceBotLoader.loadUnknownGame('SwordWorld2_0');
 
             const help = diceBot.getHelpMessage();

@@ -1,70 +1,51 @@
-const TargetClass = [
-    Array,
-    Boolean,
-    Function,
-    Number,
-    RegExp,
-    String,
-];
+function savaBuiltinObjects() {
+    const BuiltinObjects = [
+        Array,
+        Boolean,
+        Function,
+        Number,
+        RegExp,
+        String,
+    ];
 
-function restoreOriginal(originalKeys) {
-    TargetClass.forEach(targetClass => {
-        Object.keys(targetClass.prototype)
-            .filter(key => originalKeys[targetClass.name].indexOf(key) < 0)
-            .forEach(key => {
-                // eslint-disable-next-line no-param-reassign
-                delete targetClass.prototype[key];
+    function callback(obj) {
+        return {
+            obj,
+            keys: Object.getOwnPropertyNames(obj),
+        };
+    }
+
+    return BuiltinObjects.map(callback).concat(BuiltinObjects.map(o => o.prototype).map(callback));
+}
+
+function refineOpalPrototype(saved) {
+    saved.forEach(({ obj, keys }) => {
+        Object.getOwnPropertyNames(obj)
+            .filter(key => keys.indexOf(key) < 0)
+            .forEach((key) => {
+                // Reflect.deleteProperty(obj, key);
+                Object.defineProperty(obj, key, {
+                    enumerable: false,
+                    configurable: false,
+                    writable: true,
+                    value: obj[key],
+                });
             });
     });
 }
 
-function backupOriginalKeys() {
-    const originalKeys = {};
-
-    TargetClass.forEach(targetClass => {
-        originalKeys[targetClass.name] = Object.keys(targetClass.prototype);
-    });
-
-    return originalKeys;
-}
-
-const OpalPrototypes = {};
-function loadOpal() {
-    TargetClass.forEach(targetClass => {
-        Object.assign(targetClass.prototype, OpalPrototypes[targetClass.name]);
-    });
-}
-function backupOpalKeys() {
-    TargetClass.forEach(targetClass => {
-        OpalPrototypes[targetClass.name] = Object.assign({}, targetClass.prototype);
-    });
-}
-
 function init() {
-    const originalKeys = backupOriginalKeys();
+    const saved = savaBuiltinObjects();
 
-    // eslint-disable-next-line
+    // eslint-disable-next-line dynamic-require
     const Opal = require('../lib/opal.ruby.js');
-    backupOpalKeys();
 
-    restoreOriginal(originalKeys);
+    refineOpalPrototype(saved);
+
+    return Opal;
 }
-init();
+const Opal = init();
 
 module.exports = function opal(callback) {
-    const originalKeys = backupOriginalKeys();
-
-    try {
-        loadOpal();
-
-        // eslint-disable-next-line
-        const result = callback(Opal);
-
-        restoreOriginal(originalKeys);
-
-        return result;
-    } catch (e) {
-        restoreOriginal(originalKeys);
-        throw e;
-    }
+    return callback(Opal);
 };

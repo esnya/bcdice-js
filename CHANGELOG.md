@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Performance issue
+    - It was very slow on V8 (Chrome/Node)
+
 ## [0.5.0] - 2017-09-08
 ### Added
 - Add DiceBot.getHelpMessage() and DiceBot.info()

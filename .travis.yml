@@ -1,20 +1,24 @@
 language: node_js
 node_js:
-  - node
-  - lts/*
+- node
+- lts/*
 before_install:
-  - bundle install
+- bundle install
 script:
-  - yarn build
-  - yarn test -- --coverage --coverageReporters lcov
+- yarn build
+- yarn test -- --coverage --coverageReporters lcov
 after_success:
-  - cat ./coverage/lcov.info | coveralls
+- cat ./coverage/lcov.info | coveralls
 deploy:
   provider: npm
   email: dev.ukatama@gmail.com
   skip_cleanup: true
   on:
     tags: true
-    condition: $TRAVIS_NODE_VERSION = lts/*
+    condition: "$TRAVIS_NODE_VERSION = lts/*"
   api_key:
     secure: sK+368Z7cpd6a81GUH865Xe6SFnP3idsh7KdgARkzHQ1Rws8XXvwTznt4wf2l4lBKmYqriRTOO+aKZo8eBBfFlqpyd/mjvrV4j+LrKhnj7i5OIliPy9ziDz2+j/2tMK1JzLvBkPlfaH2SmnDcE1L/IwdYuLGn9AA5lrknVta1onY9DWDzLnzS4xkW8kx7OCvRcx1LZcuO7U1JXYYRHr8lb5xAd9TzT9At+aOut2cIoqnBKGh+9/SBjTA8lD07nqsKP/8l/VzVFwJC/ECGixTG+b7voINB6X7+byoqT9Bf3DRzhgBflnNiRAAqQaQnNI1eGXPNfrCqJ3f4R3gjnecpqZsGs+8wyQwEgLnle+RIHyNk5d+BLRptlzgzG0mi85NgVs5Lup/C7VhQaQnByn8AHPMEHZqUA89yNdvrAfLAnWs6vDiX+4VtG6QoKxBFZh5SHFU1hh//q3xJalFk9zjFC4EZeM1y7AuINz4Ll6phy2B3P7Z+iTe9Axf1EBuFsOwCFWbVdEixSQBmXi1iGLARcTjvtNVSsm8q802cwEBfze7U0qQR6v/N1kElre7EF/htbwziHOlQ+dMLqYW9NxlrJ3Qtr2gwm9uwTGRp8hwIEmRZrPQs5jq/83n6Hrx5k9llFL3JtRsUl3MRj64OBcPVzhqbxx1hRX9ViAPHtyg/WI=
+notifications:
+  email: false
+  slack:
+    secure: nY08EbRJFtL9+sUYM39Y1Agl+fmG2Tf7q3ti3AIC4g/2lrUSO/YQUMV4vLJ+Vt10HWL6n88EEclxD3mGjCg5wv07god5X3xm6deduy1JP41opdvAFAiNX3zoYh00GlZXsNZH1/jHn20Djz0hTxcPSosn4aDqR+in7xGJ1D1S11WKdqcFZ43XS0UxtRyoYzY/10z9AWh9MPZ0nfv6zJJlDT8GazSiQ4ArsFlHQ1gcbHf+/85eqa/HewmxCXSDsqpkbiQqRFQK1hHYlYhyrBKEZVaHADdPTLdEAGnwH6q0uayw7ydr4h0ubqt8EewwOO0qbn50IQUatzNDQhObY4lqgNgfM5xMQXryNcWB2+FKZI109OmuizXqyG7y4H3GbqJB93ueMEYndHuy363xsh+TvgPti92OWV08enCymFwHX2a62FpBTvCRbVhFWZDJhUyDvAYjV60CYkuJSdMPpNmbDWXAHLq0CcdYorIelSmnuQDUP9rZOmgb3rO4Wkhslx5P0C80warRVin1diaCKk8weVhpxsAGspIyspwfEOhLnXEiqvQMFPDnytZX0NlizAe3OXWx+G9SxOfFMrZSon0wlBlHCNWoeN4l8GbCJwsvznvRiYKawPBS3LFZrd+dz4gkvzdSZ15MPLwp3y9D74PYx8oCImthfDpDKbgg0Wks2R4=

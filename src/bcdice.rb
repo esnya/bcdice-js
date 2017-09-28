@@ -135,12 +135,12 @@ class DiceBotResolver
     end
 
     def self.createInstanceAsync(className)
-        `require('./opal')(() => #{DiceBotResolver.createInstance(className)})`
+        `require('./opal')(function() { return #{DiceBotResolver.createInstance(className)}; })`
     end
 
     def self.resolve(className)
         if (@@async)
-            `#{DiceBotResolver.loadAsync(className)}.then(() => #{DiceBotResolver.createInstanceAsync(className)})`
+            `#{DiceBotResolver.loadAsync(className)}.then(function() { return #{DiceBotResolver.createInstanceAsync(className)}; })`
         else
             DiceBotResolver.load(className)
             DiceBotResolver.createInstance(className)

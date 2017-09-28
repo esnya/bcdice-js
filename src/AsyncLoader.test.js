@@ -40,7 +40,7 @@ describe('AsyncLoader', () => {
         const BCDice = require('./BCDice').default;
         const bcdice = new BCDice();
 
-        it('loads diceBoy', () =>
+        it('loads diceBot', () =>
             bcdice.setGameByTitle('Alsetto')
                 .then(() => {
                     expect(customLoader).toBeCalledWith('Alsetto');

@@ -25,7 +25,7 @@ describe('AsyncLoader', () => {
     describe('DiceBotLoader', () => {
         const DiceBot = require('./DiceBot').default;
 
-        it('loads diceBot', () => {
+        it('loads diceBot async', () => {
             const result = DiceBotLoader.loadUnknownGame('SwordWorld2_0');
 
             expect(customLoader).toBeCalledWith('SwordWorld2_0');
@@ -40,7 +40,7 @@ describe('AsyncLoader', () => {
         const BCDice = require('./BCDice').default;
         const bcdice = new BCDice();
 
-        it('loads diceBot', () =>
+        it('loads diceBot async', () =>
             bcdice.setGameByTitle('Alsetto')
                 .then(() => {
                     expect(customLoader).toBeCalledWith('Alsetto');

@@ -40,12 +40,24 @@ describe('BCDice', () => {
         bcdice.setMessage('K20');
     });
 
-    it('.dice_command', () => {
-        const [result, isSecret] = bcdice.dice_command();
+    describe('.dice_command', () => {
+        it('rolls dice', () => {
+            const [result, isSecret] = bcdice.dice_command();
 
-        expect(result).toBeDefined();
-        expect(result).not.toEqual('1');
-        expect(isSecret).toBe(false);
+            expect(result).toBeDefined();
+            expect(result).not.toEqual('1');
+            expect(isSecret).toBe(false);
+        });
+
+        it('avoids gsub! error', () => {
+            bcdice.setMessage('K20+10');
+
+            const [result, isSecret] = bcdice.dice_command();
+
+            expect(result).toBeDefined();
+            expect(result).not.toEqual('1');
+            expect(isSecret).toBe(false);
+        });
     });
 
     it('.setGameByTitle', () => {

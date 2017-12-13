@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Errors from mutable metohds of string (e.g. `K20 + 10` (SW2.0))
+
 ## [0.7.0] - 2017-12-13
 ### Changed
 - Update BCDice to Ver2.02.73

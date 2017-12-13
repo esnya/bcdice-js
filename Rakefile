@@ -39,7 +39,13 @@ task :genRubyCodes => GEN_DIR do
       FileUtils.mkdir_p(dir)
     end
 
-    File.write(dst, File.read(src).gsub(/=begin.*?=end/m, '').gsub(/require ['"](.*?)\.rb['"]/, 'require "\1"'))
+    File.write(
+      dst,
+      File.read(src)
+        .gsub(/=begin.*?=end/m, '')
+        .gsub(/require ['"](.*?)\.rb['"]/, 'require "\1"')
+        .gsub(/^(\s*)([a-zA-Z0-9_]+)\.([a-zA-Z0-9_]+)!\((.*)\)$/, '\1\2 = \2.\3(\4)')
+      )
   end
 end
 

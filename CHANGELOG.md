@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Errors from regexp with `$n`
+
 ## [0.7.1] - 2017-12-13
 ### Fixed
 - Errors from mutable metohds of string (e.g. `K20 + 10` (SW2.0))

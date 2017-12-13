@@ -39,12 +39,20 @@ task :genRubyCodes => GEN_DIR do
       FileUtils.mkdir_p(dir)
     end
 
+    matchedReplacer = "\nmatched__1 = $1\nmatched__2 = $2\nmatched__3 = $3\nmatched__4 = $4\nmatched__5 = $5\nmatched__6 = $6\nmatched__7 = $7\nmatched__8 = $8\n"
+
     File.write(
       dst,
       File.read(src)
         .gsub(/=begin.*?=end/m, '')
         .gsub(/require ['"](.*?)\.rb['"]/, 'require "\1"')
         .gsub(/^(\s*)([a-zA-Z0-9_]+)\.([a-zA-Z0-9_]+)!\((.*)\)$/, '\1\2 = \2.\3(\4)')
+        .gsub(/ \$([1-6])/, ' matched__\1')
+        .gsub(/^(\s*unless.*=~.*\n)((.|\n)*?)end\n/, '\1\2end' + matchedReplacer)
+        .gsub(/^(\s*while.*=~.*)$/, '\1' + matchedReplacer)
+        .gsub(/^(\s*return.*unless.*=~.*)$/, '\1' + matchedReplacer)
+        .gsub(/^(\s*if.*=~.*)$/, '\1' + matchedReplacer)
+        .gsub(/\$@/, '[]')
       )
   end
 end

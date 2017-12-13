@@ -58,6 +58,16 @@ describe('BCDice', () => {
             expect(result).not.toEqual('1');
             expect(isSecret).toBe(false);
         });
+
+        it('avoids split error', () => {
+            bcdice.setMessage('2D>5');
+
+            const [result, isSecret] = bcdice.dice_command();
+
+            expect(result).toBeDefined();
+            expect(result).not.toEqual('1');
+            expect(isSecret).toBe(false);
+        });
     });
 
     it('.setGameByTitle', () => {

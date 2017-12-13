@@ -33,7 +33,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
-    "coveralls": "^2.13.1",
+    "coveralls": "^3.0.0",
     "jest": "^21.0.2",
     "npm-run-all": "^4.0.2",
     "rimraf": "^2.6.1",

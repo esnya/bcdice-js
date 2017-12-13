@@ -24,8 +24,9 @@ describe('BCDice', () => {
         expect(bcdice.getGameType()).toEqual('DiceBot');
     });
 
+    let DiceBotLoaderList
     it('.setDiceBot', () => {
-        const DiceBotLoaderList = require('./DiceBotLoaderList').default;
+        DiceBotLoaderList = require('./DiceBotLoaderList').default;
 
         const diceBot = DiceBotLoaderList.find('SW').loadDiceBot();
         bcdice.setDiceBot(diceBot);
@@ -60,7 +61,29 @@ describe('BCDice', () => {
         });
 
         it('avoids split error', () => {
-            bcdice.setMessage('2D>5');
+            bcdice.setMessage('2D6>5');
+
+            const [result, isSecret] = bcdice.dice_command();
+
+            expect(result).toBeDefined();
+            expect(result).not.toEqual('1');
+            expect(isSecret).toBe(false);
+        });
+
+        it('rolls CC>5 COC', () => {
+            bcdice.setGameByTitle('Cthulhu7th');
+            bcdice.setMessage('CC>5');
+
+            const [result, isSecret] = bcdice.dice_command();
+
+            expect(result).toBeDefined();
+            expect(result).not.toEqual('1');
+            expect(isSecret).toBe(false);
+        });
+
+        it('rolls BT2 Kancolle', () => {
+            bcdice.setGameByTitle('KanColle');
+            bcdice.setMessage('BT2');
 
             const [result, isSecret] = bcdice.dice_command();
 
@@ -79,7 +102,7 @@ describe('BCDice', () => {
     it('.setCollectRandResult', () => {
         bcdice.setGameByTitle('DiceBot');
 
-        bcdice.setMessage('2D');
+        bcdice.setMessage('2D6');
         bcdice.setCollectRandResult(true);
         bcdice.dice_command();
     });

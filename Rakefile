@@ -39,20 +39,24 @@ task :genRubyCodes => GEN_DIR do
       FileUtils.mkdir_p(dir)
     end
 
-    matchedReplacer = "\nmatched__1 = $1\nmatched__2 = $2\nmatched__3 = $3\nmatched__4 = $4\nmatched__5 = $5\nmatched__6 = $6\nmatched__7 = $7\nmatched__8 = $8\n"
+    matchedReplacer = "\n" + (1 .. 20).map { |n| "__last__match__#{n} = $#{n}"}.join("\n") + "\n"
 
     File.write(
       dst,
       File.read(src)
+        .gsub(/coding:utf-8-/, 'coding: utf-8 -')
         .gsub(/=begin.*?=end/m, '')
         .gsub(/require ['"](.*?)\.rb['"]/, 'require "\1"')
         .gsub(/^(\s*)([a-zA-Z0-9_]+)\.([a-zA-Z0-9_]+)!\((.*)\)$/, '\1\2 = \2.\3(\4)')
-        .gsub(/ \$([1-6])/, ' matched__\1')
-        .gsub(/^(\s*unless.*=~.*\n)((.|\n)*?)end\n/, '\1\2end' + matchedReplacer)
-        .gsub(/^(\s*while.*=~.*)$/, '\1' + matchedReplacer)
-        .gsub(/^(\s*return.*unless.*=~.*)$/, '\1' + matchedReplacer)
-        .gsub(/^(\s*if.*=~.*)$/, '\1' + matchedReplacer)
         .gsub(/\$@/, '[]')
+        .gsub(/(^|\s|[\(|={!\[])\$([0-9]+)/, '\1__last__match__\2')
+        .gsub(/^(\s*unless(.*\/.*\/|[^\/]*=~).*\n)((.|\n)*?)end\n/, '\1\3end' + matchedReplacer)
+        .gsub(/^(\s*while(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
+        .gsub(/^(\s*return.*unless(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
+        .gsub(/^(\s*nil unless(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
+        .gsub(/^(\s*if(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
+        .gsub(/^(\s*when \/.*\/i?)$/, '\1' + matchedReplacer)
+        .gsub(/^\s*\/.*\/.*=~.*$/, '\1' + matchedReplacer)
       )
   end
 end

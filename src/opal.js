@@ -1,51 +1,42 @@
 function savaBuiltinObjects() {
-    const BuiltinObjects = [
-        Array,
-        Boolean,
-        Function,
-        Number,
-        RegExp,
-        String,
-    ];
+  const BuiltinObjects = [
+    Array,
+    Boolean,
+    Function,
+    Number,
+    RegExp,
+    String,
+  ];
 
-    function callback(obj) {
-        return {
-            obj,
-            keys: Object.getOwnPropertyNames(obj),
-        };
-    }
+  function callback(obj) {
+    return {
+      obj,
+      keys: Object.getOwnPropertyNames(obj),
+    };
+  }
 
-    return BuiltinObjects.map(callback).concat(BuiltinObjects.map(o => o.prototype).map(callback));
+  return BuiltinObjects.map(callback).concat(BuiltinObjects.map(o => o.prototype).map(callback));
 }
 
 function refineOpalPrototype(saved) {
-    saved.forEach(({ obj, keys }) => {
-        Object.getOwnPropertyNames(obj)
-            .filter(key => keys.indexOf(key) < 0)
-            .forEach((key) => {
-                // Reflect.deleteProperty(obj, key);
-                Object.defineProperty(obj, key, {
-                    enumerable: false,
-                    configurable: false,
-                    writable: true,
-                    value: obj[key],
-                });
-            });
-    });
+  saved.forEach(({ obj, keys }) => {
+    Object.getOwnPropertyNames(obj)
+      .filter(key => keys.indexOf(key) < 0)
+      .forEach((key) => {
+        // Reflect.deleteProperty(obj, key);
+        Object.defineProperty(obj, key, {
+          enumerable: false,
+          configurable: false,
+          writable: true,
+          value: obj[key],
+        });
+      });
+  });
 }
 
-function init() {
-    const saved = savaBuiltinObjects();
+const saved = savaBuiltinObjects();
+// eslint-disable-next-line dynamic-require
+const Opal = require('../lib/opal.ruby.js');
+refineOpalPrototype(saved);
 
-    // eslint-disable-next-line dynamic-require
-    const Opal = require('../lib/opal.ruby.js');
-
-    refineOpalPrototype(saved);
-
-    return Opal;
-}
-const Opal = init();
-
-module.exports = function opal(callback) {
-    return callback(Opal);
-};
+module.exports = Opal;

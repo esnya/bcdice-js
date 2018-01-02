@@ -1,52 +1,48 @@
 import '../lib/bcdice.ruby.js';
-import opal from './opal';
+import Opal from './opal';
 import DiceBot from './DiceBot';
 import { isNil } from './utilities';
 
 export default class DiceBotLoader {
-    static loadUnknownGame(gameTitle) {
-        const diceBot = opal(Opal => Opal.DiceBotLoader.$loadUnknownGame(gameTitle));
+  static loadUnknownGame(gameTitle) {
+    const diceBot = Opal.DiceBotLoader.$loadUnknownGame(gameTitle)
 
-        if (diceBot instanceof Promise) {
-            return diceBot.then(d => isNil(d) ? null: new DiceBot(d));
-        }
+    if (diceBot instanceof Promise) {
+      return diceBot.then(d => isNil(d) ? null: new DiceBot(d));
+    }
 
-        if (isNil(diceBot)) return null;
+    if (isNil(diceBot)) return null;
 
+    return new DiceBot(diceBot);
+  }
+
+  static collectDiceBotDescriptions() {
+    return Opal.DiceBotLoader.$collectDiceBotDescriptions();
+  }
+
+  static collectDiceBots() {
+    return Opal.DiceBotLoader.$collectDiceBots().map((diceBot) => {
+      if (diceBot instanceof Promise) {
+        return diceBot.then(d => new DiceBot(d));
+      } else {
         return new DiceBot(diceBot);
-    }
+      }
+    });
+  }
 
-    static collectDiceBotDescriptions() {
-        return opal(
-            Opal => Opal.DiceBotLoader.$collectDiceBotDescriptions()
-        );
-    }
+  constructor(diceBotLoader) {
+    this._diceBotLoader = diceBotLoader;
+  }
 
-    static collectDiceBots() {
-        return opal(
-            Opal => Opal.DiceBotLoader.$collectDiceBots().map((diceBot) => {
-                if (diceBot instanceof Promise) {
-                    return diceBot.then(d => new DiceBot(d));
-                } else {
-                    return new DiceBot(diceBot);
-                }
-            })
-        );
-    }
+  match() {
+    return this._diceBotLoader.$match()
+  }
 
-    constructor(diceBotLoader) {
-        this._diceBotLoader = diceBotLoader;
+  loadDiceBot() {
+    const diceBot = this._diceBotLoader.$loadDiceBot()
+    if (diceBot instanceof Promise) {
+      return diceBot.then(d => new DiceBot(d))
     }
-
-    match() {
-        return opal(() => this._diceBotLoader.$match());
-    }
-
-    loadDiceBot() {
-        const diceBot = opal(() => this._diceBotLoader.$loadDiceBot());
-        if (diceBot instanceof Promise) {
-            return diceBot.then(d => new DiceBot(d))
-        }
-        return new DiceBot(diceBot);
-    }
+    return new DiceBot(diceBot);
+  }
 }

@@ -170,11 +170,18 @@ end
 task :build => [:transpile, :dicebot, :opal] do
 end
 
-desc 'Build JavaScript code'
-task :transpile => [:generate, DIST_DIR] do
+def transpile(src, dst, opalPath = './opal')
   builder = Opal::Builder.new
   builder.append_paths('.', './generated', './stub')
-  File.binwrite 'lib/bcdice.ruby.js', 'require(\'./opal\')(function(Opal){' + builder.build('./src/bcdice.rb').to_s + '})'
+
+  transpiled = builder.build(src).to_s
+
+  File.binwrite dst, "var Opal = require('#{opalPath}');\n#{transpiled}"
+end
+
+desc 'Build JavaScript code'
+task :transpile => [:generate, DIST_DIR] do
+  transpile('src/bcdice.rb', 'lib/bcdice.ruby.js')
 end
 
 desc 'Build DiceBot JavaSciprtCode'
@@ -186,9 +193,8 @@ task :dicebot => [:generate, DIST_DICEBOT_DIR] do
     dst = (Pathname.new(DIST_DICEBOT_DIR) / Pathname.new(src).relative_path_from(Pathname.new(GEN_DIR + '/diceBot/'))).to_s.gsub(/rb$/, 'js')
     path = Pathname.new(src).relative_path_from(Pathname.new(GEN_DIR)).to_s
     className = Pathname.new(src).relative_path_from(Pathname.new(GEN_DIR + '/diceBot/')).to_s.gsub(/\.rb$/, '')
-    builder = Opal::Builder.new
-    builder.append_paths('.', './generated', './stub')
-    File.binwrite dst, 'require(\'../opal\')(function(Opal){' + builder.build(path).to_s + '})'
+
+    transpile(path, dst, '../opal')
   end
 end
 

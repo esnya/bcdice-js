@@ -195,5 +195,8 @@ end
 desc 'Build Opal'
 task :opal => [DIST_DIR] do
   builder = Opal::Builder.new
-  File.binwrite 'lib/opal.ruby.js', "var Wrapper = {};\n(function(){\n" + builder.build('./src/opal.rb').to_s.gsub(/(def\.length = nil)/, '// \1') + "}).call(Wrapper);\nmodule.exports = Wrapper.Opal;"
+  js = builder.build('./src/opal.rb').to_s
+    .gsub(/def.length = nil/, '// \0')
+    .gsub(/^( *)([a-z]+)\.length *= *([a-zA-Z_0-9\.]+);/, "\\1Object.defineProperty(\\2, 'length', { value: \\3 });")
+  File.binwrite 'lib/opal.ruby.js', "var Wrapper = {};\n(function(){\n#{js}\n}).call(Wrapper);\nmodule.exports = Wrapper.Opal;"
 end

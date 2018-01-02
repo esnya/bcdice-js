@@ -3,6 +3,7 @@ $:.unshift File.dirname(__FILE__) + '/BCDice/src'
 
 require 'base64'
 require 'opal'
+require 'opal/nodes/variables'
 require 'pathname'
 require 'rake/testtask'
 require 'rake/clean'
@@ -10,6 +11,39 @@ require 'diceBot/DiceBot'
 require 'diceBot/DiceBotLoader'
 require 'diceBot/DiceBotLoaderList'
 require 'TableFileData'
+
+# Opal Patch
+module Opal
+  module Nodes
+    class BackRefNode
+      def handle_global_match
+        helper :gvars
+
+        push "($match === nil ? nil : $match['$[]'](0))"
+      end
+
+      def handle_pre_match
+        helper :gvars
+
+        push "($match === nil ? nil : $match.$pre_match())"
+      end
+
+      def handle_post_match
+        helper :gvars
+
+        push "($match === nil ? nil : $match.$post_match())"
+      end
+    end
+    class NthrefNode
+      def compile
+        helper :gvars
+        add_local "$match"
+
+        push "($match === nil ? nil : $match['$[]'](#{index}))"
+      end
+    end
+  end
+end
 
 task :default => :build
 
@@ -49,14 +83,14 @@ task :genRubyCodes => GEN_DIR do
         .gsub(/require ['"](.*?)\.rb['"]/, 'require "\1"')
         .gsub(/^(\s*)([a-zA-Z0-9_]+)\.([a-zA-Z0-9_]+)!\((.*)\)$/, '\1\2 = \2.\3(\4)')
         .gsub(/\$@/, '[]')
-        .gsub(/(^|\s|[\(|={!\[])\$([0-9]+)/, '\1__last__match__\2')
-        .gsub(/^(\s*unless(.*\/.*\/|[^\/]*=~).*\n)((.|\n)*?)end\n/, '\1\3end' + matchedReplacer)
-        .gsub(/^(\s*while(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
-        .gsub(/^(\s*return.*unless(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
-        .gsub(/^(\s*nil unless(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
-        .gsub(/^(\s*if(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
-        .gsub(/^(\s*when \/.*\/i?)$/, '\1' + matchedReplacer)
-        .gsub(/^\s*\/.*\/.*=~.*$/, '\1' + matchedReplacer)
+        # .gsub(/(^|\s|[\(|={!\[])\$([0-9]+)/, '\1__last__match__\2')
+        # .gsub(/^(\s*unless(.*\/.*\/|[^\/]*=~).*\n)((.|\n)*?)end\n/, '\1\3end' + matchedReplacer)
+        # .gsub(/^(\s*while(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
+        # .gsub(/^(\s*return.*unless(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
+        # .gsub(/^(\s*nil unless(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
+        # .gsub(/^(\s*if(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
+        # .gsub(/^(\s*when \/.*\/i?)$/, '\1' + matchedReplacer)
+        # .gsub(/^\s*\/.*\/.*=~.*$/, '\1' + matchedReplacer)
       )
   end
 end

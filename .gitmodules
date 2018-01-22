@@ -1,4 +1,3 @@
 [submodule "BCDice"]
 	path = BCDice
-	url = https://github.com/ukatama/BCDice.git
-	branch = js-base
+	url = https://github.com/torgtaitai/BCDice.git

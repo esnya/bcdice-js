@@ -32,6 +32,9 @@ export default class BCDice {
 
         if (!(diceBot instanceof DiceBot)) throw new Error('Invalit argument type');
         opal(() => this._bcdice.$setDiceBot(diceBot._diceBot));
+
+        this.diceBot = diceBot;
+        diceBot._diceBot['$bcdice='](this._bcdice);
     }
 
     // eslint-disable-next-line no-unused-vars

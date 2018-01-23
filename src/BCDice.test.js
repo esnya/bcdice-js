@@ -91,6 +91,23 @@ describe('BCDice', () => {
             expect(result).not.toEqual('1');
             expect(isSecret).toBe(false);
         });
+
+        it('rolls DoubleCloss', () => {
+            bcdice.setGameByTitle('DoubleCross');
+
+
+            bcdice.setMessage('2dx@7');
+            const [result1] = bcdice.dice_command();
+            expect(result1).toMatch(/^: \(2R10\[7\]\)/);
+
+            bcdice.setMessage('2dx+5@7');
+            const [result2] = bcdice.dice_command();
+            expect(result2).toMatch(/^: \(2R10\+5\[7\]\)/);
+
+            bcdice.setMessage('2dx@7+5');
+            const [result3] = bcdice.dice_command();
+            expect(result3).toMatch(/^: \(2R10\+5\[7\]\)/);
+        });
     });
 
     it('.setGameByTitle', () => {

@@ -1,6 +1,6 @@
 {
   "name": "bcdice-js",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "BCDice for JavaScript",
   "main": "lib/index.js",
   "scripts": {

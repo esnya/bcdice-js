@@ -55,6 +55,7 @@ task :genRubyCodes => GEN_DIR do
         .gsub(/^(\s*return.*unless(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
         .gsub(/^(\s*nil unless(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
         .gsub(/^(\s*if(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
+        .gsub(/^(\s*elsif(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
         .gsub(/^(\s*when \/.*\/i?)$/, '\1' + matchedReplacer)
         .gsub(/^\s*\/.*\/.*=~.*$/, '\1' + matchedReplacer)
         .gsub(/\.gsub\(.*\)\s*{/, '\0' + matchedReplacer)

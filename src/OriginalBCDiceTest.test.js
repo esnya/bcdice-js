@@ -71,15 +71,13 @@ describe('Original BCDice Test', () => {
       'Warhammer.txt',
       'WitchQuest.txt',
       'YankeeYogSothoth.txt',
+      'None.txt',
+      'SevenFortressMobius.txt',
+      'NightWizard.txt',
+      'NightWizard3rd.txt',
 
       // 実行不可
       'CthulhuTech.txt',
-      'NightmareHunterDeep.txt',
-      'NightWizard.txt',
-      'NightWizard3rd.txt',
-      'None.txt',
-      'SevenFortressMobius.txt',
-      'TunnelsAndTrolls.txt',
     ].some(a => a === file));
   files.forEach(file => {
     const gameType = file.replace(/\.txt$/, '');

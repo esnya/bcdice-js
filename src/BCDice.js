@@ -76,4 +76,12 @@ export default class BCDice {
             return opal(() => this._bcdice.$setGameByTitle(gameTitle));
         }
     }
+
+    setTest(isTest) {
+        opal(() => this._bcdice.$setTest(isTest));
+    }
+
+    setRandomValues(rands) {
+        opal(() => this._bcdice.$setRandomValues(rands));
+    }
 }

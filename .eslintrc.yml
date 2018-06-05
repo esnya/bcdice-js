@@ -1,0 +1,16 @@
+env:
+  es6: true
+extends: 'airbnb'
+parserOptions:
+  sourceType: module
+overrides:
+  files:
+    - '**/*.test.js'
+  env:
+    jest: true
+  rules:
+    global-require: off
+rules:
+  no-underscore-dangle: off
+  import/extensions: off
+  class-methods-use-this: off

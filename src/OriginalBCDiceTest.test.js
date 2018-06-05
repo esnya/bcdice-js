@@ -1,6 +1,5 @@
 jest.autoMockOff();
 
-const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
 
@@ -79,14 +78,14 @@ describe('Original BCDice Test', () => {
       // 実行不可
       'CthulhuTech.txt',
     ].some(a => a === file));
-  files.forEach(file => {
+  files.forEach((file) => {
     const gameType = file.replace(/\.txt$/, '');
     describe(gameType, () => {
-      const tests = fs.readFileSync(path.join(DataDir, file)).toString()
+      fs.readFileSync(path.join(DataDir, file)).toString()
         .replace(/\r/g, '')
         .split(/=+\n/g)
         .filter(a => a)
-        .map(test => {
+        .forEach((test) => {
           const m = test.match(/input:\n((.|\n)*)?output:\n((.|\n)*)rand:(.*)\n/);
           it('should be valid test', () => expect(m).toBeTruthy());
 

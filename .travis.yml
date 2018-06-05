@@ -6,7 +6,8 @@ before_install:
 - bundle install
 script:
 - yarn build
-- yarn test -- --coverage --coverageReporters lcov
+- yarn lint
+- yarn test:jest -- --coverage --coverageReporters lcov
 after_success:
 - cat ./coverage/lcov.info | coveralls
 deploy:

@@ -181,3 +181,5 @@ end
 # def debug(*msg)
 #     `console.log('debug>', #{msg})`
 # end
+
+$SEND_STR_MAX = 99999

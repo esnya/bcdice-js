@@ -54,6 +54,7 @@ describe('Original BCDice Test', () => {
       'Skynauts.txt',
       'Strave.txt',
       'SwordWorld2_0.txt',
+      'SwordWorld2_5.txt',
       'Warhammer.txt',
       'None.txt',
       'SevenFortressMobius.txt',

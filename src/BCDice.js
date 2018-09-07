@@ -50,6 +50,7 @@ export default class BCDice {
   dice_command() {
     return this.diceCommand();
   }
+
   diceCommand() {
     return opal(() => this._bcdice.$dice_command());
   }

@@ -41,11 +41,10 @@ describe('AsyncLoader', () => {
     const BCDice = require('./BCDice').default;
     const bcdice = new BCDice();
 
-    it('loads diceBot async', () =>
-      bcdice.setGameByTitle('Alsetto')
-        .then(() => {
-          expect(customLoader).toBeCalledWith('Alsetto');
-          expect(bcdice.getGameType()).toEqual('Alsetto');
-        }));
+    it('loads diceBot async', () => bcdice.setGameByTitle('Alsetto')
+      .then(() => {
+        expect(customLoader).toBeCalledWith('Alsetto');
+        expect(bcdice.getGameType()).toEqual('Alsetto');
+      }));
   });
 });

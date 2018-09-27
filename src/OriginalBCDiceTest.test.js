@@ -60,6 +60,9 @@ describe('Original BCDice Test', () => {
       'SevenFortressMobius.txt',
       'NightWizard.txt',
       'NightWizard3rd.txt',
+      'Postman.txt',
+      'StellarKnights.txt',
+      'WorldOfDarkness.txt',
 
       // Execution Error
       'CthulhuTech.txt',

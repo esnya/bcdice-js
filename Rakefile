@@ -57,7 +57,7 @@ task :genRubyCodes => GEN_DIR do
         .gsub(/^(\s*if(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
         .gsub(/^(\s*elsif(.*\/.*\/|[^\/]*=~).*)$/, '\1' + matchedReplacer)
         .gsub(/^(\s*when \/.*\/i?)$/, '\1' + matchedReplacer)
-        .gsub(/^\s*\/.*\/.*=~.*$/, '\1' + matchedReplacer)
+        .gsub(/^\s*\/.*\/.*=~.*$/, '\0' + matchedReplacer)
         .gsub(/\.gsub\(.*\)\s*{/, '\0' + matchedReplacer)
         .gsub(/\.sub\(.*\)\s*{/, '\0' + matchedReplacer)
         .gsub(/@@bcdice/, '@bcdice')
@@ -132,7 +132,7 @@ task :genExtratables => GEN_DIR do
     gameType = info['gameType']
     gameType ||= ''
     command = info['command']
-  
+
     infoDump = info.to_s
     tableData.push("tableData['#{gameType}_#{command}'] = #{infoDump}")
 

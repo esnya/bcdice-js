@@ -15,9 +15,6 @@ describe('Original BCDice Test', () => {
       'Airgetlamh.txt',
       'Alsetto.txt',
       'Avandner.txt',
-      'BeginningIdol.txt',
-      'BeginningIdol_Korean.txt',
-      'BladeOfArcana.txt',
       'BlindMythos.txt',
       'BloodMoon.txt',
       'ColossalHunter.txt',
@@ -79,7 +76,7 @@ describe('Original BCDice Test', () => {
           it('should be valid test', () => expect(m).toBeTruthy());
 
           const input = m[1].replace(/\n$/m, '');
-          const output = m[3].replace(/\n$/m, '');
+          const output = m[3].replace(/\n$/m, '').replace(/ダイス残り.*$/, '');
           const rand = m[5].replace(/\n$/m, '');
           // console.log({ input, output, rand });
 

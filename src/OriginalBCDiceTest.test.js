@@ -79,7 +79,7 @@ describe('Original BCDice Test', () => {
           it('should be valid test', () => expect(m).toBeTruthy());
 
           const input = m[1].replace(/\n$/m, '');
-          const output = m[3].replace(/\n$/m, '');
+          const output = m[3].replace(/\n$/m, '').replace(/ダイス残り.*$/, '');
           const rand = m[5].replace(/\n$/m, '');
           // console.log({ input, output, rand });
 

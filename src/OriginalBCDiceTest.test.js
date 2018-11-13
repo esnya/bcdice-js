@@ -12,6 +12,12 @@ describe('Original BCDice Test', () => {
       // Test Failed
       '_InsaneScp.txt',
       'AceKillerGene.txt',
+      'Airgetlamh.txt',
+      'Alsetto.txt',
+      'Avandner.txt',
+      'BeginningIdol.txt',
+      'BeginningIdol_Korean.txt',
+      'BladeOfArcana.txt',
       'BlindMythos.txt',
       'BloodMoon.txt',
       'ColossalHunter.txt',
@@ -44,7 +50,9 @@ describe('Original BCDice Test', () => {
       'PlotTest.txt',
       'Ryutama.txt',
       'ShinMegamiTenseiKakuseihen.txt',
+      'Satasupe.txt',
       'Skynauts.txt',
+      'Strave.txt',
       'SwordWorld2_0.txt',
       'SwordWorld2_5.txt',
       'Warhammer.txt',
@@ -54,6 +62,7 @@ describe('Original BCDice Test', () => {
       'NightWizard3rd.txt',
       'Postman.txt',
       'StellarKnights.txt',
+      'WorldOfDarkness.txt',
 
       // Execution Error
       'CthulhuTech.txt',

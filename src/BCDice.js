@@ -6,25 +6,14 @@ import DiceBot from './DiceBot';
 import DiceBotLoader from './DiceBotLoader';
 import DiceBotLoaderList from './DiceBotLoaderList';
 import DiceBotResolver from './DiceBotResolver';
-import { nil2null } from './utilities';
+import { proxy } from './utilities';
 
 export default class BCDice {
   constructor() {
     const factory = Opal.BCDiceMaker.$new();
     this._bcdice = factory.$newBcDice();
-  }
 
-  // eslint-disable-next-line no-unused-vars
-  setDir(dir, prefix) {
-    throw new Error('Unsupported');
-  }
-
-  isKeepSecretDice(b) {
-    this._bcdice.$isKeepSecretDice(b);
-  }
-
-  getGameType() {
-    return this._bcdice.$getGameType();
+    return proxy(this._bcdice)(this);
   }
 
   setDiceBot(diceBot) {
@@ -37,26 +26,8 @@ export default class BCDice {
     diceBot._diceBot['$bcdice='](this._bcdice);
   }
 
-  setMessage(message) {
-    this._bcdice.$setMessage(message);
-  }
-
-  // eslint-disable-next-line camelcase
-  dice_command() {
-    return this.diceCommand();
-  }
-
   diceCommand() {
-    return this._bcdice.$dice_command();
-  }
-
-  setCollectRandResult(b) {
-    this._bcdice.$setCollectRandResult(b);
-  }
-
-  getRandResults() {
-    const results = this._bcdice.$getRandResults();
-    return nil2null(results);
+    return this.dice_command();
   }
 
   setGameByTitle(gameTitle) {
@@ -72,13 +43,5 @@ export default class BCDice {
       });
     }
     return this._bcdice.$setGameByTitle(gameTitle);
-  }
-
-  setTest(isTest) {
-    this._bcdice.$setTest(isTest);
-  }
-
-  setRandomValues(rands) {
-    this._bcdice.$setRandomValues(rands);
   }
 }

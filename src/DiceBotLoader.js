@@ -1,7 +1,7 @@
 import '../lib/bcdice.ruby.js';
 import Opal from './opal';
 import DiceBot from './DiceBot';
-import { isNil } from './utilities';
+import { isNil, proxy } from './utilities';
 
 export default class DiceBotLoader {
   static loadUnknownGame(gameTitle) {
@@ -31,10 +31,8 @@ export default class DiceBotLoader {
 
   constructor(diceBotLoader) {
     this._diceBotLoader = diceBotLoader;
-  }
 
-  match() {
-    return this._diceBotLoader.$match();
+    return proxy(diceBotLoader)(this);
   }
 
   loadDiceBot() {

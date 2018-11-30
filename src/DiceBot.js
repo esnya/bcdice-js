@@ -1,5 +1,6 @@
 import '../lib/bcdice.ruby.js';
 import Opal from './opal';
+import { proxy } from './utilities';
 
 export default class DiceBot {
   constructor(diceBot) {
@@ -8,28 +9,15 @@ export default class DiceBot {
     } else {
       this._diceBot = Opal.DiceBot.$new();
     }
-  }
 
-  gameName() {
-    return this._diceBot.$gameName();
-  }
-
-  gameType() {
-    return this._diceBot.$gameType();
-  }
-
-  postSet() {
-    this._diceBot.$postSet();
-  }
-
-  getHelpMessage() {
-    return this._diceBot.$getHelpMessage();
+    return proxy(this._diceBot)(this);
   }
 
   info() {
     const result = this._diceBot.$info().$$smap;
-    return Object.assign({
+    return {
       prefixes: result.prefixs,
-    }, result);
+      ...result,
+    };
   }
 }

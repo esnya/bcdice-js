@@ -12,10 +12,6 @@ describe('BCDice', () => {
     expect(bcdice).toBeInstanceOf(BCDice);
   });
 
-  it('.setDir', () => {
-    expect(() => bcdice.setDir('a', 'b')).toThrow();
-  });
-
   it('.isKeepSecretDice', () => {
     bcdice.isKeepSecretDice(true);
   });
@@ -31,10 +27,6 @@ describe('BCDice', () => {
     const diceBot = DiceBotLoaderList.find('SW').loadDiceBot();
     bcdice.setDiceBot(diceBot);
     expect(bcdice.getGameType()).toEqual('SwordWorld');
-  });
-
-  it('.setIrcClient', () => {
-    expect(() => bcdice.setIrcClient(null)).toThrow();
   });
 
   it('.setMessage', () => {

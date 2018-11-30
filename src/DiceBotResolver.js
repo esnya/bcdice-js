@@ -1,11 +1,12 @@
-import opal from './opal';
+import '../lib/bcdice.ruby.js';
+import Opal from './opal';
 
 export default class DiceBotResolver {
   static setCustomLoader(loader, async) {
-    opal(Opal => Opal.DiceBotResolver.$setCustomLoader(loader, async || false));
+    Opal.DiceBotResolver.$setCustomLoader(loader, async || false);
   }
 
   static isAsync() {
-    return opal(Opal => Opal.DiceBotResolver['$async?']());
+    return Opal.DiceBotResolver['$async?']();
   }
 }

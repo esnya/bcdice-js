@@ -1,11 +1,11 @@
 import '../lib/bcdice.ruby.js';
-import opal from './opal';
+import Opal from './opal';
 import DiceBot from './DiceBot';
 import { isNil } from './utilities';
 
 export default class DiceBotLoader {
   static loadUnknownGame(gameTitle) {
-    const diceBot = opal(Opal => Opal.DiceBotLoader.$loadUnknownGame(gameTitle));
+    const diceBot = Opal.DiceBotLoader.$loadUnknownGame(gameTitle);
 
     if (diceBot instanceof Promise) {
       return diceBot.then(d => (isNil(d) ? null : new DiceBot(d)));
@@ -17,16 +17,16 @@ export default class DiceBotLoader {
   }
 
   static collectDiceBotDescriptions() {
-    return opal(Opal => Opal.DiceBotLoader.$collectDiceBotDescriptions());
+    return Opal.DiceBotLoader.$collectDiceBotDescriptions();
   }
 
   static collectDiceBots() {
-    return opal(Opal => Opal.DiceBotLoader.$collectDiceBots().map((diceBot) => {
+    return Opal.DiceBotLoader.$collectDiceBots().map((diceBot) => {
       if (diceBot instanceof Promise) {
         return diceBot.then(d => new DiceBot(d));
       }
       return new DiceBot(diceBot);
-    }));
+    });
   }
 
   constructor(diceBotLoader) {
@@ -34,11 +34,11 @@ export default class DiceBotLoader {
   }
 
   match() {
-    return opal(() => this._diceBotLoader.$match());
+    return this._diceBotLoader.$match();
   }
 
   loadDiceBot() {
-    const diceBot = opal(() => this._diceBotLoader.$loadDiceBot());
+    const diceBot = this._diceBotLoader.$loadDiceBot();
     if (diceBot instanceof Promise) {
       return diceBot.then(d => new DiceBot(d));
     }

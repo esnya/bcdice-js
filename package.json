@@ -42,7 +42,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
-    "jest": "^23.1.0",
+    "jest": "^23.6.0",
     "npm-run-all": "^4.0.2",
     "rimraf": "^2.6.1",
     "update-changelog": "^1.0.1"
@@ -53,5 +53,7 @@
       "lib"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-jest": "^23.6.0"
+  }
 }

@@ -110,7 +110,7 @@ class DiceBotLoaderList
       end
 
       file.puts("require('./bcdice');")
-      file.puts("require('./opal')(function (Opal) { Opal.DiceBotResolver.$setMode('static'); });")
+      file.puts("var Opal = require('./opal').default; Opal.DiceBotResolver.$setMode('static');")
     end
   end
 end
@@ -178,7 +178,7 @@ desc 'Build JavaScript code'
 task :transpile => [:generate, DIST_DIR] do
   builder = Opal::Builder.new
   builder.append_paths('.', './generated', './stub')
-  File.binwrite 'lib/bcdice.ruby.js', 'require(\'./opal\')(function(Opal){' + builder.build('./src/bcdice.rb').to_s + '})'
+  File.binwrite 'lib/bcdice.ruby.js', 'var Opal = require(\'./opal\').default; ' + builder.build('./src/bcdice.rb').to_s
 end
 
 desc 'Build DiceBot JavaSciprtCode'
@@ -192,7 +192,7 @@ task :dicebot => [:generate, DIST_DICEBOT_DIR] do
     className = Pathname.new(src).relative_path_from(Pathname.new(GEN_DIR + '/diceBot/')).to_s.gsub(/\.rb$/, '')
     builder = Opal::Builder.new
     builder.append_paths('.', './generated', './stub')
-    File.binwrite dst, 'require(\'../opal\')(function(Opal){' + builder.build(path).to_s + '})'
+    File.binwrite dst, 'var Opal = require(\'../opal\').default; ' + builder.build(path).to_s
   end
 end
 

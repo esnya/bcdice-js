@@ -44,8 +44,4 @@ function init() {
 
   return Opal;
 }
-const Opal = init();
-
-module.exports = function opal(callback) {
-  return callback(Opal);
-};
+export default init();

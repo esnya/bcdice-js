@@ -1,32 +1,33 @@
-import opal from './opal';
+import '../lib/bcdice.ruby.js';
+import Opal from './opal';
 
 export default class DiceBot {
   constructor(diceBot) {
     if (diceBot) {
       this._diceBot = diceBot;
     } else {
-      this._diceBot = opal(Opal => Opal.DiceBot.$new());
+      this._diceBot = Opal.DiceBot.$new();
     }
   }
 
   gameName() {
-    return opal(() => this._diceBot.$gameName());
+    return this._diceBot.$gameName();
   }
 
   gameType() {
-    return opal(() => this._diceBot.$gameType());
+    return this._diceBot.$gameType();
   }
 
   postSet() {
-    opal(() => this._diceBot.$postSet());
+    this._diceBot.$postSet();
   }
 
   getHelpMessage() {
-    return opal(() => this._diceBot.$getHelpMessage());
+    return this._diceBot.$getHelpMessage();
   }
 
   info() {
-    const result = opal(() => this._diceBot.$info().$$smap);
+    const result = this._diceBot.$info().$$smap;
     return Object.assign({
       prefixes: result.prefixs,
     }, result);

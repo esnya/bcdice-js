@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: off */
 
 import '../lib/bcdice.ruby.js';
-import opal from './opal';
+import Opal from './opal';
 import DiceBot from './DiceBot';
 import DiceBotLoader from './DiceBotLoader';
 import DiceBotLoaderList from './DiceBotLoaderList';
@@ -10,8 +10,8 @@ import { nil2null } from './utilities';
 
 export default class BCDice {
   constructor() {
-    const maker = opal(Opal => Opal.BCDiceMaker.$new());
-    this._bcdice = opal(() => maker.$newBcDice());
+    const factory = Opal.BCDiceMaker.$new();
+    this._bcdice = factory.$newBcDice();
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -20,30 +20,25 @@ export default class BCDice {
   }
 
   isKeepSecretDice(b) {
-    opal(() => this._bcdice.$isKeepSecretDice(b));
+    this._bcdice.$isKeepSecretDice(b);
   }
 
   getGameType() {
-    return opal(() => this._bcdice.$getGameType());
+    return this._bcdice.$getGameType();
   }
 
   setDiceBot(diceBot) {
     if (!diceBot) return;
 
     if (!(diceBot instanceof DiceBot)) throw new Error('Invalit argument type');
-    opal(() => this._bcdice.$setDiceBot(diceBot._diceBot));
+    this._bcdice.$setDiceBot(diceBot._diceBot);
 
     this.diceBot = diceBot;
     diceBot._diceBot['$bcdice='](this._bcdice);
   }
 
-  // eslint-disable-next-line no-unused-vars
-  setIrcClient(client) {
-    throw new Error('Unimplemented');
-  }
-
   setMessage(message) {
-    opal(() => this._bcdice.$setMessage(message));
+    this._bcdice.$setMessage(message);
   }
 
   // eslint-disable-next-line camelcase
@@ -52,15 +47,15 @@ export default class BCDice {
   }
 
   diceCommand() {
-    return opal(() => this._bcdice.$dice_command());
+    return this._bcdice.$dice_command();
   }
 
   setCollectRandResult(b) {
-    opal(() => this._bcdice.$setCollectRandResult(b));
+    this._bcdice.$setCollectRandResult(b);
   }
 
   getRandResults() {
-    const results = opal(() => this._bcdice.$getRandResults());
+    const results = this._bcdice.$getRandResults();
     return nil2null(results);
   }
 
@@ -76,14 +71,14 @@ export default class BCDice {
         diceBot.postSet();
       });
     }
-    return opal(() => this._bcdice.$setGameByTitle(gameTitle));
+    return this._bcdice.$setGameByTitle(gameTitle);
   }
 
   setTest(isTest) {
-    opal(() => this._bcdice.$setTest(isTest));
+    this._bcdice.$setTest(isTest);
   }
 
   setRandomValues(rands) {
-    opal(() => this._bcdice.$setRandomValues(rands));
+    this._bcdice.$setRandomValues(rands);
   }
 }

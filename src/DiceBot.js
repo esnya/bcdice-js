@@ -15,9 +15,8 @@ export default class DiceBot {
 
   info() {
     const result = this._diceBot.$info().$$smap;
-    return {
+    return Object.assign({
       prefixes: result.prefixs,
-      ...result,
-    };
+    }, result);
   }
 }

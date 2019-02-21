@@ -10,54 +10,46 @@ describe('Original BCDice Test', () => {
     .filter(file => file.match(/\.txt$/))
     .filter(file => ![
       // Test Failed
-      '_InsaneScp.txt',
-      'AceKillerGene.txt',
-      'BlindMythos.txt',
-      'BloodMoon.txt',
-      'ColossalHunter.txt',
-      'Cthulhu7th.txt',
-      'Cthulhu7th_Korean.txt',
-      'DarkDaysDrive.txt',
-      'DetatokoSaga.txt',
-      'DetatokoSaga_Korean.txt',
-      'Dracurouge.txt',
-      'Dracurouge_Korean.txt',
-      'EarthDawn.txt',
-      'EarthDawn3.txt',
-      'EarthDawn4.txt',
-      'EclipsePhase.txt',
-      'Elysion.txt',
-      'FilledWith.txt',
-      'GardenOrder.txt',
-      'GurpsFW.txt',
-      'IthaWenUa.txt',
-      'Kamigakari.txt',
-      'KillDeathBusiness.txt',
-      'KillDeathBusiness_Korean.txt',
-      'LogHorizon.txt',
-      'LogHorizon_Korean.txt',
-      'MagicaLogia.txt',
-      'MetalHeadExtream.txt',
-      'OneWayHeroics.txt',
-      'Oukahoushin3rd.txt',
-      'Peekaboo.txt',
-      'PlotTest.txt',
-      'Ryutama.txt',
-      'ShinMegamiTenseiKakuseihen.txt',
-      'Skynauts.txt',
-      'SwordWorld2_0.txt',
-      'SwordWorld2_5.txt',
-      'Warhammer.txt',
-      'None.txt',
-      'SevenFortressMobius.txt',
-      'NightWizard.txt',
-      'NightWizard3rd.txt',
-      'Postman.txt',
-      'StellarKnights.txt',
-
-      // Execution Error
-      'CthulhuTech.txt',
-    ].some(a => a === file));
+      '_InsaneScp',
+      'ArsMagica',
+      'AceKillerGene',
+      'BloodMoon',
+      'Cthulhu7th',
+      'Cthulhu7th_Korean',
+      'DetatokoSaga',
+      'DetatokoSaga_Korean',
+      'Dracurouge',
+      'Dracurouge_Korean',
+      'EarthDawn3',
+      'EarthDawn4',
+      'EclipsePhase',
+      'Elysion',
+      'FilledWith',
+      'GardenOrder',
+      'GurpsFW',
+      'IthaWenUa',
+      'Kamigakari',
+      'KillDeathBusiness',
+      'KillDeathBusiness_Korean',
+      'MagicaLogia',
+      'MetalHeadExtream',
+      'OneWayHeroics',
+      'Oukahoushin3rd',
+      'Peekaboo',
+      'PlotTest',
+      'Ryutama',
+      'ShinMegamiTenseiKakuseihen',
+      'Skynauts',
+      'SwordWorld2_0',
+      'SwordWorld2_5',
+      'Warhammer',
+      'None',
+      'SevenFortressMobius',
+      'NightWizard',
+      'NightWizard3rd',
+      'Postman',
+      'StellarKnights',
+    ].some(a => `${a}.txt` === file));
   files.forEach((file) => {
     const gameType = file.replace(/\.txt$/, '');
     describe(gameType, () => {
@@ -70,29 +62,23 @@ describe('Original BCDice Test', () => {
           it('should be valid test', () => expect(m).toBeTruthy());
 
           const input = m[1].replace(/\n$/m, '');
-          const output = m[3].replace(/\n$/m, '').replace(/ダイス残り.*$/, '');
+          const output = `:${m[3].replace(/\n$/m, '').replace(/ダイス残り.*$/, '').replace(/^.*? :/, '')}`;
           const rand = m[5].replace(/\n$/m, '');
-          // console.log({ input, output, rand });
 
           const BCDice = require('./BCDice').default;
           const bcdice = new BCDice();
 
-          it('should executes command', () => {
+          it(`sould executes dise from "${input}" to "${output}" with "${rand}"`, () => {
             bcdice.setRandomValues(rand.split(/,/g).map(a => a.split(/\//g)));
             bcdice.setTest(true);
 
             bcdice.setGameByTitle(gameType);
             bcdice.setMessage(input);
 
-            // expect(bcdice.getGameType()).toEqual(gameType);
-
             const [result, isSecret] = bcdice.diceCommand();
-            // console.log({output, result: `${bcdice.getGameType()} ${result}` });
 
-            const resultMessage = result === '1'
-              ? `${input}\n`
-              : `${input}\n${bcdice.getGameType().replace(/:Korean/, '')} ${result.replace(/\r/g, '')}${isSecret ? '###secret dice###' : ''}`;
-            expect(resultMessage).toEqual(`${input}\n${output}`);
+            const resultMessage = result === '1' ? ':' : `${result.replace(/\r/g, '')}${isSecret ? '###secret dice###' : ''}`;
+            expect(resultMessage).toEqual(output);
           });
         });
     });

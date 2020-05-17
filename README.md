@@ -1,3 +1,7 @@
+!!DEPRECATED!!
+
+Please use https://www.npmjs.com/package/bcdice
+
 # bcdice-js
 [![npm package](https://img.shields.io/npm/v/bcdice-js.svg?style=flat-square)](https://www.npmjs.org/package/bcdice-js)
 [![Build Status](https://img.shields.io/travis/ukatama/bcdice-js/master.svg?style=flat-square)](https://travis-ci.org/ukatama/bcdice-js)
